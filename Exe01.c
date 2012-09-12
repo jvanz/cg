@@ -69,7 +69,7 @@ int main (int argc, const char * argv[]) {
 	glutInit(&argc, (char **)argv);
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
 	glutInitWindowSize (400, 400);
-	gJanelaPrincipal = glutCreateWindow("Respostas-02-Pratica OpenGL");
+	gJanelaPrincipal = glutCreateWindow("Respostas-01-Pratica OpenGL");
 	inicializa();
     
 	glutReshapeFunc(redimensiona);
