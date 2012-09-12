@@ -1,7 +1,13 @@
 #include <GL/glut.h>
 #include <math.h>
+#include <stdio.h>
 
 GLint gJanelaPrincipal = 0;
+
+float x = -20, y = 20, x2 = -20, y2 = 20;
+float limit = 10;
+int raio = 10;
+
 
 void inicializa(void) {
 	glClearColor(238.0f, 233.0f, 233.0f, 0.0);
@@ -18,21 +24,21 @@ void desenhaEixos(void) {
 	// y
 	glBegin( GL_LINES );
         	glVertex2f(0.0f, 0.0f);
-	        glVertex2f(0.0f, 10.0f);
+	        glVertex2f(0.0f, (float)raio);
 	glEnd();
 
 	// x
 	glColor3f(1.0f, 0.0f, 0.0f);
 	glBegin( GL_LINES);
         	glVertex2f(0.0f,  0.0f);
-		glVertex2f(10.0f, 0.0f);
+		glVertex2f((float)raio, 0.0f);
   	glEnd();	
 }
 
 
 
 void desenhaPontos(void) {
-	int grau, raio = 10;
+	int grau;
 	float x, y;
 	glColor4f(0.0f, 0.0f, 0.0f, 0);
 
@@ -54,7 +60,7 @@ void desenhaPontos(void) {
 void desenha(void) {
 	glMatrixMode (GL_PROJECTION);
 	glLoadIdentity ();
-	gluOrtho2D(-20, 20, -20, 20);
+	gluOrtho2D(x, y, x2, y2);
 	glMatrixMode (GL_MODELVIEW);
 	glLoadIdentity ();
 	glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -65,14 +71,51 @@ void desenha(void) {
 	glutSwapBuffers();
 }
 
+void teclado(unsigned char tecla, GLint x, GLint y)
+{
+	switch(tecla) {
+	case 'O':
+	case 'o':
+		if (limit < 20) {
+			x += -1.0;
+			y +=  1.0;
+			x2 += -1.0;
+			y2 +=  1.0;
+
+			raio--;
+
+			desenha();
+			limit++;
+		}
+		break;
+	case 'P':
+	case 'p':
+		if (limit) {
+			x +=  1.0;
+			y += -1.0;
+			x2 +=  1.0;
+			y2 += -1.0;
+
+			raio++;
+
+			desenha();
+			limit--;
+		}
+		break;
+	default:
+		printf("Necessita ser teclas O ou P!\n");
+	}
+}
+
 int main (int argc, const char * argv[]) {
 	glutInit(&argc, (char **)argv);
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
-	glutInitWindowSize (400, 400);
-	gJanelaPrincipal = glutCreateWindow("Respostas-01-Pratica OpenGL");
+	glutInitWindowSize (600, 600);
+	gJanelaPrincipal = glutCreateWindow("Respostas-02-Pratica OpenGL");
 	inicializa();
     
 	glutReshapeFunc(redimensiona);
+	glutKeyboardFunc(teclado);
 	glutDisplayFunc(desenha);
 	glutMainLoop();
 	
