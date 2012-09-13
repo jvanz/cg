@@ -30,7 +30,7 @@ void desenha(void)
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	desenhaEixos();
-	desenhaAspiral(50);
+	desenhaAspiral(10);
 
 	glutSwapBuffers();
 }
@@ -47,17 +47,14 @@ void desenhaAspiral(int voltas)
 	glPointSize(1.0f);
 	glBegin(GL_POINTS);
 	int contadorVoltas = 0;
-	int contadorAumentoRaio = 1;
 	double raio = 0.1;
-	double fator = 0.25;
 	while(contadorVoltas <= voltas){
 		double angulo;
 		for(angulo = 0.0 ; angulo < 360.0; angulo += 0.1){
 			double x = retornaX(angulo,raio);
 			double y = retornaY(angulo,raio);
 			glVertex2d(x,y);
-			raio += (0.0005 * fator);
-			fator += 0.001;
+			raio += 0.00015 * raio;
 		}
 		contadorVoltas++;
 	}

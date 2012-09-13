@@ -11,3 +11,6 @@ Exe2:
 
 Exe3:
 	$(CC) Exe03.c -o 3gl $(ARGS)
+
+Exe4:
+	$(CC) n2/Exe04.c -o 3gl $(ARGS)
