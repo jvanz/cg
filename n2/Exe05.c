@@ -18,6 +18,7 @@ void desenhaTriangulos(void);
 void desenhaTriangulosFan(void);
 void desenhaQuads(void);
 void desenhaTrianguloStrip();
+void desenhaPoligono(void);
 double retornaX(double,double);
 double retornaY(double,double);
 
@@ -37,7 +38,7 @@ void desenha(void)
 	glLoadIdentity();
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	desenhaTrianguloStrip();
+	desenhaPoligono();
 
 	glutSwapBuffers();
 }
@@ -216,6 +217,35 @@ void desenhaQuads()
 
         glEnd();
 
+}
+
+void desenhaPoligono()
+{
+	//FIXME - O poligono não esta no formato correto
+	printf("Desenha GL_POLYGON\n");
+	glBegin(GL_POLYGON);
+
+        glColor3f(0.0f,0.0f,1.0f);
+        glVertex2f(-10.0f,10.0f);
+
+	glVertex2f(0.0, 5.0f);
+
+        glColor3f(0.0f,1.0f,0.0f);
+        glVertex2f(10.0f,10.0f);
+
+	glVertex2f(5.0f, 0.0f);
+
+        glColor3f(1.0f,0.0f,0.0f);
+        glVertex2f(10.0f,-10.0f);
+
+	glVertex2f(0.0f, -5.0f);
+
+        glColor3f(1.0f,0.0f,1.0f);
+        glVertex2f(-10.0f,-10.0f);
+
+	glVertex2f(-5.0f,0.0f);
+
+	glEnd();	
 }
 
 int main(int argc, const char * argv[])
