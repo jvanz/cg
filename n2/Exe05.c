@@ -19,6 +19,7 @@ void desenhaTriangulosFan(void);
 void desenhaQuads(void);
 void desenhaTrianguloStrip();
 void desenhaPoligono(void);
+void desenhaQuadStrip(void);
 double retornaX(double,double);
 double retornaY(double,double);
 
@@ -56,7 +57,7 @@ void desenha(void)
 	}else if(funcaoAtual == 7){
 		desenhaQuads();
 	}else if(funcaoAtual == 8){
-		// TODO - desenha quad strip
+		desenhaQuadStrip();
 	}else if(funcaoAtual == 9){
 		desenhaPoligono();	
 	}
@@ -272,6 +273,26 @@ void desenhaPoligono()
         glVertex2f(-10.0f,10.0f);
 
 	glEnd();	
+}
+
+void desenhaQuadStrip()
+{
+	printf("Desenha GL_QUAD_STRIP\n");
+	glBegin(GL_QUAD_STRIP);
+	
+        glColor3f(0.0f,0.0f,1.0f);
+        glVertex2f(-10.0f,10.0f);
+
+        glColor3f(0.0f,1.0f,0.0f);
+        glVertex2f(10.0f,10.0f);
+
+        glColor3f(1.0f,0.0f,0.0f);
+        glVertex2f(10.0f,-10.0f);
+
+        glColor3f(1.0f,0.0f,1.0f);
+        glVertex2f(-10.0f,-10.0f);
+	
+	glEnd();
 }
 #define ESPACO 32
 void teclado(unsigned char tecla, GLint x, GLint y)
