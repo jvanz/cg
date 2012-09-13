@@ -30,7 +30,7 @@ void desenha(void)
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	desenhaEixos();
-	desenhaAspiral(15);
+	desenhaAspiral(50);
 
 	glutSwapBuffers();
 }
@@ -49,17 +49,15 @@ void desenhaAspiral(int voltas)
 	int contadorVoltas = 0;
 	int contadorAumentoRaio = 1;
 	double raio = 0.1;
+	double fator = 0.25;
 	while(contadorVoltas <= voltas){
 		double angulo;
 		for(angulo = 0.0 ; angulo < 360.0; angulo += 0.1){
 			double x = retornaX(angulo,raio);
 			double y = retornaY(angulo,raio);
 			glVertex2d(x,y);
-			if(contadorAumentoRaio == 50){ /*Isso foi feito para melhorar o efeito. Foi a primeira maneira que me vaio a cabeça*/
-				raio += 0.00015;
-			}else{
-				contadorAumentoRaio++;
-			}
+			raio += (0.0005 * fator);
+			fator += 0.001;
 		}
 		contadorVoltas++;
 	}

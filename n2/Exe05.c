@@ -24,6 +24,7 @@ double retornaY(double,double);
 
 
 //TODO - Implementar a interação com a barra de espaço
+int funcaoAtual = 0;
 void init(void)
 {
 	glClearColor(1.0f,1.0f,1.0f,0.0);
@@ -38,8 +39,27 @@ void desenha(void)
 	glLoadIdentity();
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	desenhaPoligono();
-
+	if(funcaoAtual == 0){
+		desenhaPontos();
+	}else if(funcaoAtual == 1){
+		desenhaLinhas();
+	}else if(funcaoAtual == 2){
+		desenhaLineLoop();
+	}else if(funcaoAtual == 3){
+		desenhaLineStrip();
+	}else if(funcaoAtual == 4){
+		desenhaTriangulos();
+	}else if(funcaoAtual == 5){
+		desenhaTriangulosFan();
+	}else if(funcaoAtual == 6){
+		desenhaTrianguloStrip();
+	}else if(funcaoAtual == 7){
+		desenhaQuads();
+	}else if(funcaoAtual == 8){
+		// TODO - desenha quad strip
+	}else if(funcaoAtual == 9){
+		desenhaPoligono();	
+	}
 	glutSwapBuffers();
 }
 
@@ -50,6 +70,7 @@ void redimensiona(int w, int h)
 
 void desenhaPontos()
 {
+	printf("Desenha GL_POINTS\n");
 	glPointSize(3.0f);
 	glBegin(GL_POINTS);
 
@@ -77,6 +98,7 @@ void desenhaPontos()
 
 void desenhaLinhas()
 {
+	printf("Desenha GL_LINES\n");
 	glLineWidth(3.0f);
 	glBegin(GL_LINES);
 	glColor3f(0.0f,0.0f,1.0f);
@@ -94,6 +116,7 @@ void desenhaLinhas()
 
 void desenhaLineLoop()
 {
+	printf("Desenha GL_LINE_LOOP\n");
 	glLineWidth(3.0f);
 	glBegin(GL_LINE_LOOP);
 	glColor3f(0.0f,0.0f,1.0f);
@@ -114,6 +137,7 @@ void desenhaLineLoop()
 
 void desenhaLineStrip()
 {
+	printf("Desenha GL_LINE_STRIP\n");
 	glLineWidth(3.0f);
 	glBegin(GL_LINE_STRIP);
 
@@ -135,6 +159,7 @@ void desenhaLineStrip()
 
 void desenhaTriangulos()
 {
+	printf("Desenha GL_TRIANGLES\n");
 	glLineWidth(3.0f);
 	glBegin(GL_TRIANGLES);
 
@@ -153,6 +178,7 @@ void desenhaTriangulos()
 
 void desenhaTriangulosFan()
 {
+	printf("Desenha GL_TRIANGLE_FAN\n");
 	glLineWidth(3.0f);
 	glBegin(GL_TRIANGLE_FAN);
 
@@ -178,6 +204,7 @@ void desenhaTriangulosFan()
 
 void desenhaTrianguloStrip()
 {
+	printf("Desenha GL_TRIANGLE_STRIP\n");
 	glLineWidth(3.0f);
 	glBegin(GL_TRIANGLE_STRIP);
 
@@ -221,31 +248,43 @@ void desenhaQuads()
 
 void desenhaPoligono()
 {
-	//FIXME - O poligono não esta no formato correto
 	printf("Desenha GL_POLYGON\n");
 	glBegin(GL_POLYGON);
 
-        glColor3f(0.0f,0.0f,1.0f);
-        glVertex2f(-10.0f,10.0f);
-
-	glVertex2f(0.0, 5.0f);
+	glVertex2f(0.0f,5.0f);
 
         glColor3f(0.0f,1.0f,0.0f);
         glVertex2f(10.0f,10.0f);
 
-	glVertex2f(5.0f, 0.0f);
+	glVertex2f(5.0f,0.0f);
 
-        glColor3f(1.0f,0.0f,0.0f);
+	glColor3f(1.0f,0.0f,0.0f);
         glVertex2f(10.0f,-10.0f);
 
-	glVertex2f(0.0f, -5.0f);
+	glVertex2f(0.0f,-5.0f);
 
         glColor3f(1.0f,0.0f,1.0f);
         glVertex2f(-10.0f,-10.0f);
 
-	glVertex2f(-5.0f,0.0f);
+	glVertex2f(-5.0f, 0.0f);
+
+        glColor3f(0.0f,0.0f,1.0f);
+        glVertex2f(-10.0f,10.0f);
 
 	glEnd();	
+}
+#define ESPACO 32
+void teclado(unsigned char tecla, GLint x, GLint y)
+{
+	switch(tecla){
+		case ESPACO:
+			funcaoAtual++;
+			if(funcaoAtual == 10)
+				funcaoAtual = 0;
+			desenha();
+			
+	}	
+		
 }
 
 int main(int argc, const char * argv[])
@@ -258,6 +297,7 @@ int main(int argc, const char * argv[])
 	init();
 	
 	glutReshapeFunc(redimensiona);
+	glutKeyboardFunc(teclado);
 	glutDisplayFunc(desenha);
 	glutMainLoop();
 	
