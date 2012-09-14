@@ -17,3 +17,6 @@ Exe4:
 
 Exe6:
 	$(CC) n2/Exe06.c -o 6gl $(ARGS)
+
+Exe7:
+	$(CC) n2/Exe07.c -o 7gl $(ARGS)
