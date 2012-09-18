@@ -24,7 +24,6 @@ double retornaX(double,double);
 double retornaY(double,double);
 
 
-//TODO - Implementar a interação com a barra de espaço
 int funcaoAtual = 0;
 void init(void)
 {
