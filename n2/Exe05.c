@@ -27,37 +27,6 @@ void desenhaPrimitiva(int primitiva)
 /* Foram adicionados if dentros dessa functions para que o desenho de algumas primitivas
  * gráficas não fiquem iguais. :-)
  */
-	if(primitiva == GL_POINTS){
-		printf("GL_POINTS\n");
-	}
-	if(primitiva == GL_LINES){
-		printf("GL_LINES\n");
-	}
-	if(primitiva == GL_LINE_LOOP){
-		printf("GL_LINE_LOOP\n");
-	}
-	if(primitiva == GL_LINE_STRIP){
-		printf("GL_LINE_STRIP\n");
-	}
-	if(primitiva == GL_TRIANGLES){
-		printf("GL_TRIANGLES\n");
-	}
-	if(primitiva == GL_TRIANGLE_FAN){
-		printf("GL_TRIANGLE_FAN\n");
-	}
-	if(primitiva == GL_TRIANGLE_STRIP){
-		printf("GL_TRIANGLE_STRIP\n");
-	}
-	if(primitiva == GL_QUADS){
-		printf("GL_QUADS\n");
-	}
-	if(primitiva == GL_QUAD_STRIP){
-		printf("GL_QUAD_STRIP\n");
-	}
-	if(primitiva == GL_POLYGON){
-		printf("GL_POLYGON\n");
-	}
-
 
 	glPointSize(3.0f);
 	glBegin(primitiva);
@@ -169,7 +138,6 @@ int main(int argc, const char * argv[])
 	glutInitWindowSize(800,800);
 	GLint gJanelaPrincipal = glutCreateWindow("N2 - Exe05");
 	init();
-	printf(GL_POINTS);
 	glutReshapeFunc(redimensiona);
 	glutKeyboardFunc(teclado);
 	glutDisplayFunc(desenha);
