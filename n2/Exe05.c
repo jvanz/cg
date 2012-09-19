@@ -9,16 +9,8 @@
 
 void init(void);
 void desenha(void);
+void desenhaPrimitiva(int);
 void redimensiona(int,int);
-void desenhaPontos(void);
-void desenhaLinhas(void);
-void desenhaLineLoop(void);
-void desenhaLineStrip(void);
-void desenhaTriangulos(void);
-void desenhaTriangulosFan(void);
-void desenhaQuads(void);
-void desenhaTrianguloStrip();
-void desenhaPoligono(void);
 void desenhaQuadStrip(void);
 double retornaX(double,double);
 double retornaY(double,double);
@@ -30,6 +22,94 @@ void init(void)
 	glClearColor(1.0f,1.0f,1.0f,0.0);
 }
 
+void desenhaPrimitiva(int primitiva)
+{
+/* Foram adicionados if dentros dessa functions para que o desenho de algumas primitivas
+ * gráficas não fiquem iguais. :-)
+ */
+	if(primitiva == GL_POINTS){
+		printf("GL_POINTS\n");
+	}
+	if(primitiva == GL_LINES){
+		printf("GL_LINES\n");
+	}
+	if(primitiva == GL_LINE_LOOP){
+		printf("GL_LINE_LOOP\n");
+	}
+	if(primitiva == GL_LINE_STRIP){
+		printf("GL_LINE_STRIP\n");
+	}
+	if(primitiva == GL_TRIANGLES){
+		printf("GL_TRIANGLES\n");
+	}
+	if(primitiva == GL_TRIANGLE_FAN){
+		printf("GL_TRIANGLE_FAN\n");
+	}
+	if(primitiva == GL_TRIANGLE_STRIP){
+		printf("GL_TRIANGLE_STRIP\n");
+	}
+	if(primitiva == GL_QUADS){
+		printf("GL_QUADS\n");
+	}
+	if(primitiva == GL_QUAD_STRIP){
+		printf("GL_QUAD_STRIP\n");
+	}
+	if(primitiva == GL_POLYGON){
+		printf("GL_POLYGON\n");
+	}
+
+
+	glPointSize(3.0f);
+	glBegin(primitiva);
+
+	if(primitiva == GL_TRIANGLE_FAN){
+		//ponto verde
+		glColor3f(0.0f,1.0f,0.0f);
+		glVertex2f(10.0f,10.0f);
+		//ponto azul
+		glColor3f(0.0f,0.0f,1.0f);
+		glVertex2f(-10.0f,10.0f);
+
+	}
+
+	if(primitiva == GL_POLYGON)
+		glVertex2f(0.0f, -5.0f);
+		 
+	//ponto vermelho
+	glColor3f(1.0f,0.0f,0.0f);
+	glVertex2f(10.0f,-10.0f);
+
+	if(primitiva == GL_POLYGON)
+		glVertex2f(5.0f,0.0f);
+ 
+	if(primitiva == GL_TRIANGLE_FAN){
+		//ponto rosa
+		glColor3f(1.0f,0.0f,1.0f);
+		glVertex2f(-10.0f,-10.0f);
+	}	
+
+	//ponto verde
+	glColor3f(0.0f,1.0f,0.0f);
+	glVertex2f(10.0f,10.0f);
+
+	if(primitiva == GL_POLYGON)
+		glVertex2f(0.0f,5.0f);
+
+	if(primitiva != GL_TRIANGLE_FAN){	
+		//ponto azul
+		glColor3f(0.0f,0.0f,1.0f);
+		glVertex2f(-10.0f,10.0f);
+	}
+	if(primitiva == GL_POLYGON)
+		glVertex2f(-5.0f,0.0f);
+	
+	//ponto rosa
+	glColor3f(1.0f,0.0f,1.0f);
+	glVertex2f(-10.0f,-10.0f);
+	
+	glEnd();
+}
+
 void desenha(void)
 {
 	glMatrixMode(GL_PROJECTION);
@@ -39,239 +119,13 @@ void desenha(void)
 	glLoadIdentity();
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	if(funcaoAtual == 0){
-		desenhaPontos();
-	}else if(funcaoAtual == 1){
-		desenhaLinhas();
-	}else if(funcaoAtual == 2){
-		desenhaLineLoop();
-	}else if(funcaoAtual == 3){
-		desenhaLineStrip();
-	}else if(funcaoAtual == 4){
-		desenhaTriangulos();
-	}else if(funcaoAtual == 5){
-		desenhaTriangulosFan();
-	}else if(funcaoAtual == 6){
-		desenhaTrianguloStrip();
-	}else if(funcaoAtual == 7){
-		desenhaQuads();
-	}else if(funcaoAtual == 8){
-		desenhaQuadStrip();
-	}else if(funcaoAtual == 9){
-		desenhaPoligono();	
-	}
+	desenhaPrimitiva(funcaoAtual);
 	glutSwapBuffers();
 }
 
 void redimensiona(int w, int h)
 {
 	glutPostRedisplay();
-}
-
-void desenhaPontos()
-{
-	printf("Desenha GL_POINTS\n");
-	glPointSize(3.0f);
-	glBegin(GL_POINTS);
-
-	//ponto azul
-	glColor3f(0.0f,0.0f,1.0f);
-	glVertex2f(-10.0f,10.0f);
-
-	//ponto vermelho
-	glColor3f(1.0f,0.0f,0.0f);
-	glVertex2f(10.0f,-10.0f);
-
-	//ponto verde
-	glColor3f(0.0f,1.0f,0.0f);
-	glVertex2f(10.0f,10.0f);
-
-	//ponto rosa
-	glColor3f(1.0f,0.0f,1.0f);
-	glVertex2f(-10.0f,-10.0f);
-	
-	
-	glEnd();
-	
-
-}
-
-void desenhaLinhas()
-{
-	printf("Desenha GL_LINES\n");
-	glLineWidth(3.0f);
-	glBegin(GL_LINES);
-	glColor3f(0.0f,0.0f,1.0f);
-	glVertex2f(-10.0f,10.0f);
-	glColor3f(1.0f,0.0f,1.0f);
-	glVertex2f(-10.0f,-10.0f);
-	
-	glColor3f(0.0f,1.0f,0.0f);
-	glVertex2f(10.0f,10.0f);
-	glColor3f(1.0f,0.0f,0.0f);
-	glVertex2f(10.0f,-10.0f);
-
-	glEnd();	
-}
-
-void desenhaLineLoop()
-{
-	printf("Desenha GL_LINE_LOOP\n");
-	glLineWidth(3.0f);
-	glBegin(GL_LINE_LOOP);
-	glColor3f(0.0f,0.0f,1.0f);
-	glVertex2f(-10.0f,10.0f);
-	
-	glColor3f(0.0f,1.0f,0.0f);
-	glVertex2f(10.0f,10.0f);
-	
-	glColor3f(1.0f,0.0f,0.0f);
-	glVertex2f(10.0f,-10.0f);
-
-	glColor3f(1.0f,0.0f,1.0f);
-	glVertex2f(-10.0f,-10.0f);
-
-	glEnd();	
-
-}
-
-void desenhaLineStrip()
-{
-	printf("Desenha GL_LINE_STRIP\n");
-	glLineWidth(3.0f);
-	glBegin(GL_LINE_STRIP);
-
-	glColor3f(1.0f,0.0f,1.0f);
-	glVertex2f(-10.0f,-10.0f);
-
-	glColor3f(0.0f,0.0f,1.0f);
-	glVertex2f(-10.0f,10.0f);
-
-	glColor3f(0.0f,1.0f,0.0f);
-	glVertex2f(10.0f,10.0f);
-
-	glColor3f(1.0f,0.0f,0.0f);
-	glVertex2f(10.0f,-10.0f);
-
-	glEnd();	
-
-}
-
-void desenhaTriangulos()
-{
-	printf("Desenha GL_TRIANGLES\n");
-	glLineWidth(3.0f);
-	glBegin(GL_TRIANGLES);
-
-	glColor3f(0.0f,0.0f,1.0f);
-	glVertex2f(-10.0f,10.0f);
-
-	glColor3f(0.0f,1.0f,0.0f);
-	glVertex2f(10.0f,10.0f);
-
-	glColor3f(1.0f,0.0f,0.0f);
-	glVertex2f(10.0f,-10.0f);
-
-	glEnd();
-	
-}
-
-void desenhaTriangulosFan()
-{
-	printf("Desenha GL_TRIANGLE_FAN\n");
-	glLineWidth(3.0f);
-	glBegin(GL_TRIANGLE_FAN);
-
-	glColor3f(0.0f,0.0f,1.0f);
-	glVertex2f(-10.0f,10.0f);
-
-	glColor3f(0.0f,1.0f,0.0f);
-	glVertex2f(10.0f,10.0f);
-
-	glColor3f(1.0f,0.0f,0.0f);
-	glVertex2f(10.0f,-10.0f);
-
-	glColor3f(0.0f,1.0f,0.0f);
-	glVertex2f(10.0f,10.0f);
-
-	glColor3f(1.0f,0.0f,1.0f);
-	glVertex2f(-10.0f,-10.0f);
-	
-
-	glEnd();
-	
-}
-
-void desenhaTrianguloStrip()
-{
-	printf("Desenha GL_TRIANGLE_STRIP\n");
-	glLineWidth(3.0f);
-	glBegin(GL_TRIANGLE_STRIP);
-
-	glColor3f(0.0f,1.0f,0.0f);
-	glVertex2f(10.0f,10.0f);
-
-	glColor3f(1.0f,0.0f,0.0f);
-	glVertex2f(10.0f,-10.0f);
-
-        glColor3f(1.0f,0.0f,1.0f);
-        glVertex2f(-10.0f,-10.0f);
-	
-        glColor3f(0.0f,0.0f,1.0f);
-        glVertex2f(-10.0f,10.0f);
-
-	glEnd();
-
-	
-}
-
-void desenhaQuads()
-{
-	printf("Desenha GL_QUADS\n");
-        glBegin(GL_QUADS);
-
-        glColor3f(0.0f,0.0f,1.0f);
-        glVertex2f(-10.0f,10.0f);
-
-        glColor3f(0.0f,1.0f,0.0f);
-        glVertex2f(10.0f,10.0f);
-
-        glColor3f(1.0f,0.0f,0.0f);
-        glVertex2f(10.0f,-10.0f);
-
-        glColor3f(1.0f,0.0f,1.0f);
-        glVertex2f(-10.0f,-10.0f);
-
-        glEnd();
-
-}
-
-void desenhaPoligono()
-{
-	printf("Desenha GL_POLYGON\n");
-	glBegin(GL_POLYGON);
-
-	glVertex2f(0.0f,5.0f);
-
-        glColor3f(0.0f,1.0f,0.0f);
-        glVertex2f(10.0f,10.0f);
-
-	glVertex2f(5.0f,0.0f);
-
-	glColor3f(1.0f,0.0f,0.0f);
-        glVertex2f(10.0f,-10.0f);
-
-	glVertex2f(0.0f,-5.0f);
-
-        glColor3f(1.0f,0.0f,1.0f);
-        glVertex2f(-10.0f,-10.0f);
-
-	glVertex2f(-5.0f, 0.0f);
-
-        glColor3f(0.0f,0.0f,1.0f);
-        glVertex2f(-10.0f,10.0f);
-
-	glEnd();	
 }
 
 void desenhaQuadStrip()
@@ -315,12 +169,12 @@ int main(int argc, const char * argv[])
 	glutInitWindowSize(800,800);
 	GLint gJanelaPrincipal = glutCreateWindow("N2 - Exe05");
 	init();
-	
+	printf(GL_POINTS);
 	glutReshapeFunc(redimensiona);
 	glutKeyboardFunc(teclado);
 	glutDisplayFunc(desenha);
 	glutMainLoop();
-	
+		
 	return 0;
 }
 
