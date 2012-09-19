@@ -7,13 +7,15 @@ void inicializa(void) {
 	glClearColor(238.0f, 233.0f, 233.0f, 0.0);
 }
 
-void redimensiona(int w, int h) {
+void redimensiona(int w, int h)
+{
 	glutPostRedisplay();
 }
 
-void desenhaEixos(void) {
+void desenhaEixos(void)
+{
 	glColor3f(0.0f, 1.0f, 0.0f);
-	glLineWidth(1.0f);
+	glLineWidth(1.5f);
 	
 	// y
 	glBegin( GL_LINES );
@@ -29,29 +31,55 @@ void desenhaEixos(void) {
   	glEnd();	
 }
 
-
-
-void desenhaPontos(void) {
-	int grau, raio = 10;
+void figuras(void)
+{
+	int grau, raio = 5;
 	float x, y;
-	glColor4f(0.0f, 0.0f, 0.0f, 0);
+	glColor3f(0.0f, 0.0f, 1.0f);
 
-	glPointSize(5.0f);
+	glPointSize(1.5f);
     
-	glBegin(GL_POINTS);  // glBegin(GL_QUADS);
-		// como precisamos fazer com no maximo 72 pontos, dividimos
-		// os 360 / 72 = 5, ai pulamos a cada 5 graus
-		for (grau = 0; grau < 360; grau += 5) {
+	// esquerda
+	glBegin(GL_POINTS);
+		for (grau = 0; grau < 360; grau++) {
 			x = (raio * cos(M_PI * grau / 180.0f));
 			y = (raio * sin(M_PI * grau / 180.0f));
 
-			glVertex2d( x, y);
+			glVertex2d(x - 5.1, y + 5);
 		}
-
 	glEnd();
+
+	// direita
+	glBegin(GL_POINTS);
+		for (grau = 0; grau < 360; grau++) {
+			x = (raio * cos(M_PI * grau / 180.0f));
+			y = (raio * sin(M_PI * grau / 180.0f));
+
+			glVertex2d(x + 5.1, y + 5);
+		}
+	glEnd();
+
+	// Baixo
+	glBegin(GL_POINTS);
+		for (grau = 0; grau < 360; grau++) {
+			x = (raio * cos(M_PI * grau / 180.0f));
+			y = (raio * sin(M_PI * grau / 180.0f));
+
+			glVertex2d(x, y - 5);
+		}
+	glEnd();
+
+	//triangulo
+	glBegin(GL_LINE_LOOP);
+		glVertex2d(-5, 5);
+		glVertex2d(5, 5);
+		glVertex2d(0, -5);
+	glEnd();
+	
 }
 
-void desenha(void) {
+void desenha(void)
+{
 	glMatrixMode (GL_PROJECTION);
 	glLoadIdentity ();
 	gluOrtho2D(-20, 20, -20, 20);
@@ -60,7 +88,7 @@ void desenha(void) {
 	glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     
 	desenhaEixos();
-	desenhaPontos();
+	figuras();
     
 	glutSwapBuffers();
 }
@@ -69,7 +97,7 @@ int main (int argc, const char * argv[]) {
 	glutInit(&argc, (char **)argv);
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
 	glutInitWindowSize (400, 400);
-	gJanelaPrincipal = glutCreateWindow("Respostas-01-Pratica OpenGL");
+	gJanelaPrincipal = glutCreateWindow("Respostas-03-Pratica OpenGL");
 	inicializa();
     
 	glutReshapeFunc(redimensiona);
