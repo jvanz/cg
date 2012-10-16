@@ -12,7 +12,16 @@ void teclado(int tecla)
 
 void desenha()
 {
-	//TODO
+	glMatrixMode (GL_PROJECTION);
+	glLoadIdentity ();
+	gluOrtho2D(-20, 20, -20, 20);
+	glMatrixMode (GL_MODELVIEW);
+	glLoadIdentity ();
+	glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	
+	//TODO - Desenha componentes de tela
+	
+	glutSwapBuffers();
 }
 
 void keyPressedSpecial(int tecla, GLint px, GLint py)
