@@ -14,7 +14,6 @@ float zoom = 1.0;
  * */
 void teclado(int tecla)
 {
-	printf("Tecla = %d\n", tecla);
 	//TODO processamento das teclas
 	switch(tecla){
 		case 'I': /*Zoom +*/
