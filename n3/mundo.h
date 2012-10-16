@@ -20,6 +20,7 @@ class mundo {
 	public:
 		void ListaObjetosAdd();
 		void ListaObjetosRemove();
+		void desenha();
 		
 		/* funções inline */
 		void setOrtho(int x1, int y1, int x2, int y2) {
