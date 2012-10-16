@@ -41,6 +41,7 @@ void casteljau()
     pAtualX = p1x;
     pAtualY = p1y;
     double t;
+
     for(t = 0.0;t <= 1.0; t += ((double)1/qtdPontosSpline))
     {
         drawBezier(t, &pProxX, &pProxY);
