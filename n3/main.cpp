@@ -5,22 +5,47 @@
 
 #include "main.h"
 
+float zoom = 1.0;
+
+/*
+ * Função responsável pelo processamento das tecla precionadas pelo usuário
+ * Tecla O -> Zoom Out ( - )
+ * Tacla I -> Zoom In ( + )
+ * */
 void teclado(int tecla)
 {
+	printf("Tecla = %d\n", tecla);
 	//TODO processamento das teclas
+	switch(tecla){
+		case 'I': /*Zoom +*/
+		case 'i':
+			zoom += 0.1f;
+			break;
+		case 'O': /*Zoom -*/
+		case 'o':
+			zoom -= 0.1f;
+			break;
+	}
+	desenha();
 }
 
 void desenha()
 {
 	glMatrixMode (GL_PROJECTION);
 	glLoadIdentity ();
-	gluOrtho2D(-20, 20, -20, 20);
+	gluOrtho2D(-20 * zoom, 20 * zoom, -20 * zoom, 20 * zoom);
 	glMatrixMode (GL_MODELVIEW);
 	glLoadIdentity ();
 	glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	
 	//TODO - Desenha componentes de tela
-	
+
+	glBegin(GL_LINE_LOOP);
+	glColor3f(0.0f, 0.0f, 1.0f);
+	glVertex2d(-5, 5);
+	glVertex2d(5, 5);
+	glVertex2d(0, -5);
+	glEnd();	
 	glutSwapBuffers();
 }
 
