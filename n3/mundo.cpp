@@ -1,5 +1,10 @@
 #include "mundo.h"
 
+void Mundo::desenha()
+{
+
+}
+
 void Mundo::setOrtho(int x1, int y1, int x2, int y2)
 {
 	this->x1 = x1;
