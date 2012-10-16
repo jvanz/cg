@@ -4,6 +4,7 @@
  **/
 
 #include "main.h"
+#include "Poligno.h"
 
 float zoom = 1.0;
 
@@ -71,7 +72,7 @@ void inicializacao (void)
 
 int main (int argc, const char * argv[]) 
 {
-	glutInit(&argc, (char **)argv);
+/*	glutInit(&argc, (char **)argv);
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
 	glutInitWindowPosition (250, 200);
 	glutInitWindowSize (500, 500);
@@ -83,7 +84,9 @@ int main (int argc, const char * argv[])
  
 	glutKeyboardFunc(keyPressed);
 	glutSpecialFunc(keyPressedSpecial);
-	glutMainLoop();
+	glutMainLoop();*/
+	Poligno p;
+	p.desenha();
  
 	return 0;
 }
