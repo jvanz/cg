@@ -1,0 +1,48 @@
+CG – Avaliação N3
+
+Número de alunos: máximo 2 alunos.
+
+Objetivo: implementar uma aplicação que utilize os conceitos gráficos básicos em 2D.
+
+Atenção: os arquivos gerados nas repostas devem ser “zipado” em um único arquivo; todo o material do trabalho deve ser “postadas” no AVA até as 24:00 do dia em que foi pedido para ser entregue (ver cronograma); faça o seu trabalho, cópias receberão nota zero; o professor pode a qualquer momento questionar e avaliar o trabalho desenvolvido.
+
+O que deve ser feito: implementar um editor interativo de polígonos 2D.
+
+Conhecimento necessário:
+-conceitos básicos de grafo de cena;
+- NDC (Coordenadas de Dispositivos Normalizados): obter a coordenada do SRU a partir da coordenada de tela (clicar na tela);
+- transformações geométricas 2D: movimentar, girar e redimensionar objetos;
+- algoritmo de seleção: selecionar polígonos côncavos (não entrelaçados).
+
+Descrição: implementar na linguagem C ou Java uma aplicação para criar e visualizar polígonos 2D, utilizando a biblioteca OpenGL/JoGL. A aplicação deve permitir a criação interativa (“clicando” na tela) de polígonos sem limite do número de vértices de cada polígono, e sem limite de polígonos. Além disso, cada polígono pode ter sua própria cor e deve ser possível: apagar/mover vértices e apagar/mover polígonos. Estas funções (apagar/mover) devem se interativas (o usuário deve clicar no polígono ou vértice).
+
+Observação: as funções do OpenGL “glTranslate”, “glRotate” e “glScale” não deve ser utilizada para fazer as Transformações Geométricas, e sim deve ser usado a classe “Transform” associada ao objeto gráfico. Assim o método de desenho do objeto gráfico utiliza “Transform” junto com as funções do OpenGL “glPushMatrix”, “glMultMatrixd”e “glPopMatrix”. A justificativa, é que desta forma isolasse o render do OpenGL facilitando, se for o caso, mudar para outra forma de renderizar (por exemplo, DirectX).
+
+__________ Questões Práticas:
+- Especificação e documentação:
+01) especificar usando Diagrama de Classes;
+02) documentar o código (DoxyGen ou JavaDoc).
+
+- Estrutura de dados dinâmica:
+03) inserir e remover polígonos;
+04) selecionar vértice usando o mouse para pode mover ou remover o respectivo vértice (no caso do mover vértice o valores da coordenada é alterada, e não os valores da matriz de transformação).
+
+- Visualização:
+05) permitir zoom in/out, pan (deslocamento horizontal e vertical) de toda a cena;
+06) exibir o “rasto” ao desenhar os segmentos do polígono.
+
+- Interação com o usuário (usando teclado e mouse):
+07) desenhar polígonos (aberto ou fechado) “clicando” na tela;
+08) trocar as cores dos polígonos (pode ser associado a uma tecla);
+09) seleção de polígonos côncavos usando BBox e scan line (exibir a BBox do polígono selecionado).
+
+- Transformações Geométricas (usar matriz de transformação, não altera os valores dos vértices dos polígonos):
+10) translação: mover o polígono selecionado;
+11) escala: redimensionar o polígono selecionado em relação ao centro da sua BBox;
+12) rotação: girar o polígono selecionado em relação ao centro da sua BBox.
+
+- Grafo de cena (usar matriz de transformação global para acumular transformações de acordo com o grafo de cena):
+13) permitir adicionar polígonos “filhos” num polígono selecionado utilizando a estrutura do grafo de cena;
+14) considerar transformação global ao transformar (translação/escala/rotação) um polígono “pai”.
+
+Fonte: http://www.inf.furb.br/gcg/?page_id=470
