@@ -1,5 +1,5 @@
 
-#include"ObjetoGrafico.h"
+#include"objetografico.h"
 
 class Poligno : public ObjetoGrafico
 {

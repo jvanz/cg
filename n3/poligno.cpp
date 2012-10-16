@@ -1,6 +1,6 @@
 
 #include<iostream>
-#include"Poligno.h"
+#include"poligno.h"
 
 using namespace std;
 

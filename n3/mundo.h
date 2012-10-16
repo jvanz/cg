@@ -5,7 +5,10 @@
  * Classe mundo -  responsável por abrigar os objetos
  */
 
-class mundo {
+#include "objetografico.h"
+
+class Mundo: public ObjetoGrafico
+{
 	private:
 		/* valores ortho */
 		int x1,
@@ -18,34 +21,12 @@ class mundo {
 		    g,
 		    b;
 	public:
+		Mundo(int id): ObjetoGrafico(id){}
 		void ListaObjetosAdd();
 		void ListaObjetosRemove();
-		void desenha();
-		
-		/* funções inline */
-		void setOrtho(int x1, int y1, int x2, int y2) {
-			this->x1 = x1;
-			this->y1 = y1;
-			this->x2 = x2;
-			this->y2 = y2;
-		}
-
-		void getOrtho(int *x1, int *y1, int *x2, int *y2) {
-			*x1 = this->x1;
-			*y1 = this->y1;
-			*x2 = this->x2;
-			*y2 = this->y2;
-		}
-
-		void setRGB(int r, int g, int b) {
-			this->r = r;
-			this->g = g;
-			this->b = b;
-		}
-
-		void getRGB(int *r, int *g, int *b) {
-			*r = this->r;
-			*g = this->g;
-			*b = this->b;
-		}
+		void desenha(); /*Método de ObjetoGrafico*/
+		void setOrtho(int,int,int,int);
+		void getOrtho(int*,int*,int*,int*);
+		void setRGB(int,int,int);
+		void getRGB(int*,int*,int*);
 };

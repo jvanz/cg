@@ -3,10 +3,12 @@
  *Início do programa
  **/
 
+#include <iostream>
 #include "main.h"
-#include "Poligno.h"
+#include "mundo.h"
+using namespace std;
 
-float zoom = 1.0;
+static float zoom = 1.0;
 
 /*
  * Função responsável pelo processamento das tecla precionadas pelo usuário
@@ -85,8 +87,7 @@ int main (int argc, const char * argv[])
 	glutKeyboardFunc(keyPressed);
 	glutSpecialFunc(keyPressedSpecial);
 	glutMainLoop();*/
-	Poligno p;
-	p.desenha();
+
  
 	return 0;
 }
