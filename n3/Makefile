@@ -1,9 +1,9 @@
 CC = g++
 ARGS = -Wall -lglut -lGLU -lGL -lm
-FILES = main.h main.cpp objetografico.h objetografico.cpp poligno.h poligno.cpp mundo.h mundo.cpp
+FILES = main.cpp objetografico.cpp poligno.cpp mundo.cpp
 
 all:
-	$(CC) $(FILES) $(ARGS)
+	$(CC) $(FILES) $(ARGS) -o n3 
 
 clean:
-	rm *.out *.gch
+	rm n3
