@@ -5,9 +5,9 @@ using namespace std;
 
 class ObjetoGrafico
 {
-
 	private:
 		int id;
+		list<ObjetoGrafico> *filhos;
 	public:
 		ObjetoGrafico(int);
 		virtual void desenha(void)=0;
