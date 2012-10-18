@@ -15,11 +15,6 @@ class Mundo: public ObjetoGrafico
 		    y1,
 		    x2,
 		    y2;
-
-		/* cor de fundo */
-		int r,
-		    g,
-		    b;
 	public:
 		Mundo(int id): ObjetoGrafico(id){}
 		void ListaObjetosAdd();

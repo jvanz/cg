@@ -14,4 +14,7 @@ class ObjetoGrafico
 		int addObjGrafFilho(ObjetoGrafico&);
 		int removeObjGrafFilho(int);
 		int getId(void);
+	protected:
+		/* cores do objeto */
+		int r, g, b;
 };
