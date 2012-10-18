@@ -2,7 +2,12 @@
 
 void Mundo::desenha()
 {
-
+	glBegin(GL_LINE_LOOP);
+	glColor3f(0.0f, 0.0f, 1.0f);
+	glVertex2d(-5, 5);
+	glVertex2d(5, 5);
+	glVertex2d(0, -5);
+	glEnd();	
 }
 
 void Mundo::setOrtho(int x1, int y1, int x2, int y2)

@@ -9,6 +9,7 @@
 using namespace std;
 
 static float zoom = 1.0;
+static Mundo mundo(0);
 
 /*
  * Função responsável pelo processamento das tecla precionadas pelo usuário
@@ -41,13 +42,8 @@ void desenha()
 	glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	
 	//TODO - Desenha componentes de tela
+	mundo.desenha();
 
-	glBegin(GL_LINE_LOOP);
-	glColor3f(0.0f, 0.0f, 1.0f);
-	glVertex2d(-5, 5);
-	glVertex2d(5, 5);
-	glVertex2d(0, -5);
-	glEnd();	
 	glutSwapBuffers();
 }
 
@@ -74,7 +70,7 @@ void inicializacao (void)
 
 int main (int argc, const char * argv[]) 
 {
-/*	glutInit(&argc, (char **)argv);
+	glutInit(&argc, (char **)argv);
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
 	glutInitWindowPosition (250, 200);
 	glutInitWindowSize (500, 500);
@@ -86,7 +82,7 @@ int main (int argc, const char * argv[])
  
 	glutKeyboardFunc(keyPressed);
 	glutSpecialFunc(keyPressedSpecial);
-	glutMainLoop();*/
+	glutMainLoop();
 
  
 	return 0;

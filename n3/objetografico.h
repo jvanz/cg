@@ -1,5 +1,6 @@
 
 #include<list>
+#include <GL/glut.h>
 
 using namespace std;
 
