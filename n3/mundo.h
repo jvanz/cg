@@ -17,8 +17,6 @@ class Mundo: public ObjetoGrafico
 		    y2;
 	public:
 		Mundo(int id): ObjetoGrafico(id){}
-		void ListaObjetosAdd();
-		void ListaObjetosRemove();
 		void desenha(); /*Método de ObjetoGrafico*/
 		void setOrtho(int,int,int,int);
 		void getOrtho(int*,int*,int*,int*);
