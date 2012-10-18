@@ -1,5 +1,5 @@
-
-#include<list>
+#include <list>
+#include <vector>
 #include <GL/glut.h>
 
 using namespace std;
@@ -8,7 +8,7 @@ class ObjetoGrafico
 {
 	private:
 		int id;
-		list<ObjetoGrafico> *filhos;
+		vector<ObjetoGrafico> filhos;
 	public:
 		ObjetoGrafico(int);
 		virtual void desenha(void)=0;
