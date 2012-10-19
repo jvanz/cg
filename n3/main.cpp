@@ -74,7 +74,7 @@ int main (int argc, const char * argv[])
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
 	glutInitWindowPosition (250, 200);
 	glutInitWindowSize (500, 500);
-	GLint gJanelaPrincipal = glutCreateWindow("Trabalho N3 - Jose Guilherme Vanz / Marcos Paulo de Souza");
+	(void)glutCreateWindow("Trabalho N3 - Jose Guilherme Vanz / Marcos Paulo de Souza");
 	inicializacao();
  
 	glutReshapeFunc(reshape);
