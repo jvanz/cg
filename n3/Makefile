@@ -7,3 +7,6 @@ all:
 
 clean:
 	rm n3
+
+doxy:
+	doxygen Doxyfile

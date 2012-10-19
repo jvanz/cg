@@ -2,7 +2,10 @@
 #include<iostream>
 #include"poligno.h"
 
-
+/**
+ * Poligno
+ * Construtor padrão
+ */
 Poligno::Poligno(int id): ObjetoGrafico(id){}
 
 void Poligno::desenha(void)

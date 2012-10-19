@@ -15,12 +15,29 @@ class ObjetoGrafico
 		std::list<VART::Point4D*> ListaPontos;
 	public:
 		ObjetoGrafico(int);
+		/**
+		 * desenha
+		 * Método abstrato para desenhar todos os objetos filhos
+		 */
 		virtual void desenha(void)=0;
 		int getId(void);
 		int addObjGrafFilho(ObjetoGrafico*);
 		int removeObjGrafFilho(int);
 		vector<ObjetoGrafico*> getFilhos(void);
 	protected:
-		/* cores do objeto */
-		int r, g, b;
+		/**
+		 * R
+		 * Nivel de vermelho do objeto
+		 */
+		int r, 
+		/**
+		 * G
+		 * Nivel de verde do objeto
+		 */
+		    g,
+		/**
+		 * B
+		 * Nível de azul do objeto
+		 */
+		    b;
 };
