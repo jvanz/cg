@@ -11,6 +11,8 @@ using namespace std;
 static float zoom = 1.0;
 static Mundo mundo(0);
 
+int mousePosX, mousePosY;
+
 /*
  * Função responsável pelo processamento das tecla precionadas pelo usuário
  * Tecla O -> Zoom Out ( - )
@@ -68,6 +70,13 @@ void inicializacao (void)
 	glPointSize(3.f);
 }
 
+/// Buscar posição da tela
+void buscaPosicaoTela(GLint x, GLint y)
+{
+	mousePosX = x;
+	mousePosY = y;
+}
+
 int main (int argc, const char * argv[]) 
 {
 	glutInit(&argc, (char **)argv);
@@ -79,11 +88,11 @@ int main (int argc, const char * argv[])
  
 	glutReshapeFunc(reshape);
 	glutDisplayFunc(desenha);
+	glutPassiveMotionFunc(buscaPosicaoTela);
  
 	glutKeyboardFunc(keyPressed);
 	glutSpecialFunc(keyPressedSpecial);
 	glutMainLoop();
-
  
 	return 0;
 }
