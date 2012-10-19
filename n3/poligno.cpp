@@ -1,7 +1,6 @@
 
 #include"poligno.h"
 
-
 Poligno::Poligno(int id): ObjetoGrafico(id)
 {
 

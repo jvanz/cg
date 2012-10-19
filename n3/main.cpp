@@ -13,7 +13,8 @@ static Mundo mundo(0);
 
 int mousePosX, mousePosY;
 
-/*
+/**
+ * teclado
  * Função responsável pelo processamento das tecla precionadas pelo usuário
  * Tecla O -> Zoom Out ( - )
  * Tacla I -> Zoom In ( + )
@@ -70,7 +71,10 @@ void inicializacao (void)
 	glPointSize(3.f);
 }
 
-/// Buscar posição da tela
+/**
+ * Buscar posição da tela
+ * Captura posição do mouse quando este é movido
+ */
 void buscaPosicaoTela(GLint x, GLint y)
 {
 	mousePosX = x;
