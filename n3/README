@@ -1,5 +1,10 @@
 Pre requisitos:
-	Copiar libvart.s0.1.0 para a pasta /usr/lib
+	Para 32 bits:
+		Copiar libvart.s0.1.0 para a pasta /usr/lib
+	Para 64 bits:
+		Copiar libvart.s0.1.0_x86_64 para a pasta /usr/lib/libvart.so.1.0
+
+	Para ambos(após o .so)
 	ln -s /usr/lib/libvart.so.1.0 /usr/lib/libvart.so
 	executar: ldconfig vart
 	
