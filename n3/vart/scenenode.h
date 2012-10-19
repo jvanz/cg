@@ -5,7 +5,7 @@
 #ifndef VART_SCENENODE_H
 #define VART_SCENENODE_H
 
-#include "vart/memoryobj.h"
+#include "memoryobj.h"
 #include <list>
 #include <string>
 #include <iostream> // for XmlPrintOn

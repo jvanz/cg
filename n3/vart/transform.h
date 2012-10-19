@@ -5,8 +5,8 @@
 #ifndef VART_TRANSFORM_H
 #define VART_TRANSFORM_H
 
-#include "vart/point4d.h"
-#include "vart/scenenode.h"
+#include "point4d.h"
+#include "scenenode.h"
 #include <iostream>
 #include <iomanip>
 #include <cmath>

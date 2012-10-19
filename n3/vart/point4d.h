@@ -5,7 +5,7 @@
 #ifndef VART_POINT4D_H
 #define VART_POINT4D_H
 
-#include "vart/point.h" // FixMe: remove this later.
+#include "point.h" // FixMe: remove this later.
 #include <iostream>
 
 namespace VART {

@@ -1,6 +1,8 @@
 #include <list>
 #include <vector>
 #include <GL/glut.h>
+#include "vart/point4d.h"
+#include <list>
 
 using namespace std;
 
@@ -9,6 +11,8 @@ class ObjetoGrafico
 	private:
 		int id;
 		vector<ObjetoGrafico> filhos;
+		VART::Point4D* ponto;
+		std::list<VART::Point4D*> ListaPontos;
 	public:
 		ObjetoGrafico(int);
 		virtual void desenha(void)=0;
