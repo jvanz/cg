@@ -2,19 +2,14 @@
 
 Mundo::Mundo(int id): ObjetoGrafico(id)
 {
-	Poligno p(1);
-
-	this->addObjGrafFilho(&p);
-	cout << "Qtd filhos = " << this->getFilhos().size() << endl;
+	cout << "Instanciando mundo" << endl;
+	Poligno * p = new Poligno(1);
+	this->addObjGrafFilho(p);
 }
 
 void Mundo::desenha()
 {
-	/*
-	for(vector<ObjetoGrafico*>::iterator it = this->getFilhos().begin(); this->getFilhos().end(); ++it){
-		*it->desenha();
-	}
-	*/
+	this->desenhaFilhos();	
 }
 
 void Mundo::setOrtho(int x1, int y1, int x2, int y2)

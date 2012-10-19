@@ -21,3 +21,11 @@ vector<ObjetoGrafico*> ObjetoGrafico::getFilhos(void)
 {
 	return this->filhos;
 }
+
+void ObjetoGrafico::desenhaFilhos(void)
+{
+	int index;
+	for(index = 0; index < this->getFilhos().size(); index++){
+		this->getFilhos()[index]->desenha();
+	}
+}
