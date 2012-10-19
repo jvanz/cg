@@ -1,13 +1,20 @@
 #include "mundo.h"
 
+Mundo::Mundo(int id): ObjetoGrafico(id)
+{
+	Poligno p(1);
+
+	this->addObjGrafFilho(&p);
+	cout << "Qtd filhos = " << this->getFilhos().size() << endl;
+}
+
 void Mundo::desenha()
 {
-	glBegin(GL_LINE_LOOP);
-	glColor3f(0.0f, 0.0f, 1.0f);
-	glVertex2d(-5, 5);
-	glVertex2d(5, 5);
-	glVertex2d(0, -5);
-	glEnd();	
+	/*
+	for(vector<ObjetoGrafico*>::iterator it = this->getFilhos().begin(); this->getFilhos().end(); ++it){
+		*it->desenha();
+	}
+	*/
 }
 
 void Mundo::setOrtho(int x1, int y1, int x2, int y2)

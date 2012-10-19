@@ -5,7 +5,7 @@
  * Classe mundo -  responsável por abrigar os objetos
  */
 
-#include "objetografico.h"
+#include "poligno.h"
 
 class Mundo: public ObjetoGrafico
 {
@@ -16,7 +16,7 @@ class Mundo: public ObjetoGrafico
 		    x2,
 		    y2;
 	public:
-		Mundo(int id): ObjetoGrafico(id){}
+		Mundo(int id);
 		void desenha(); /*Método de ObjetoGrafico*/
 		void setOrtho(int,int,int,int);
 		void getOrtho(int*,int*,int*,int*);

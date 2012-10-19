@@ -17,7 +17,7 @@ class ObjetoGrafico
 		ObjetoGrafico(int);
 		virtual void desenha(void)=0;
 		int getId(void);
-		int addObjGrafFilho(ObjetoGrafico&);
+		int addObjGrafFilho(ObjetoGrafico*);
 		int removeObjGrafFilho(int);
 		vector<ObjetoGrafico*> getFilhos(void);
 	protected:
