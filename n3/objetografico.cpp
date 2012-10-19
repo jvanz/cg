@@ -54,3 +54,8 @@ void ObjetoGrafico::desenhaFilhos(void)
 		this->getFilhos()[index]->desenha();
 	}
 }
+
+void ObjetoGrafico::AddPonto(VART::Point4D *p)
+{
+	this->ListaPontos.push_back(p);
+}

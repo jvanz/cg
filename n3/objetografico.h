@@ -22,6 +22,7 @@ class ObjetoGrafico
 		int removeObjGrafFilho(int);
 		vector<ObjetoGrafico*> getFilhos(void);
 		void desenhaFilhos(void);
+		void AddPonto(VART::Point4D *);
 	protected:
 		vector<VART::Point4D*> ListaPontos;
 		/**
