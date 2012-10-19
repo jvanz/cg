@@ -10,3 +10,8 @@ int ObjetoGrafico::getId(void)
 {
 	return this->id;
 }
+
+vector<ObjetoGrafico*> ObjetoGrafico::getFilhos(void)
+{
+	return this->filhos;
+}

@@ -10,7 +10,7 @@ class ObjetoGrafico
 {
 	private:
 		int id;
-		vector<ObjetoGrafico> filhos;
+		vector<ObjetoGrafico*> filhos;
 		VART::Point4D* ponto;
 		std::list<VART::Point4D*> ListaPontos;
 	public:
@@ -19,6 +19,7 @@ class ObjetoGrafico
 		int getId(void);
 		int addObjGrafFilho(ObjetoGrafico&);
 		int removeObjGrafFilho(int);
+		vector<ObjetoGrafico*> getFilhos(void);
 	protected:
 		/* cores do objeto */
 		int r, g, b;
