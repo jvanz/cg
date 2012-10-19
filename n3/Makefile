@@ -1,5 +1,5 @@
 CC = g++
-ARGS = -Wall -lglut -lGLU -lGL -lm
+ARGS = -Wall -lglut -lGLU -lGL -lm -lvart
 FILES = main.cpp objetografico.cpp poligno.cpp mundo.cpp
 
 all:

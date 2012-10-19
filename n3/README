@@ -1,3 +1,12 @@
+Pre requisitos:
+	Copiar libvart.s0.1.0 para a pasta /usr/lib
+	ln -s /usr/lib/libvart.so.1.0 /usr/lib/libvart.so
+	executar: ldconfig vart
+	
+	ser feliz :)
+
+__________________________________________________________________
+
 CG – Avaliação N3
 
 Número de alunos: máximo 2 alunos.
