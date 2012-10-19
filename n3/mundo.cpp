@@ -1,5 +1,9 @@
 #include "mundo.h"
 
+/**
+ * Mundo
+ * Construtor padrão da classe Mundo
+ */
 Mundo::Mundo(int id): ObjetoGrafico(id)
 {
 	Poligno p(1);
