@@ -13,6 +13,19 @@ static Mundo mundo(0);
 
 int mousePosX, mousePosY;
 
+#define CIMA 101
+#define BAIXO 103
+#define DIREITA 102
+#define ESQUERDA 100
+
+
+/*
+ *TODO - Na enum dos modo da aplicacao deve ser adicionado os modos de
+ * rotacao, escala e translacao ( MODE_ROTATE, MODE_SCALE, MODE_TRANSLATE )
+ *
+ */
+
+
 /**
  * teclado
  * Função responsável pelo processamento das tecla precionadas pelo usuário
@@ -21,6 +34,7 @@ int mousePosX, mousePosY;
  * */
 void teclado(int tecla)
 {
+	printf("Tecla = %d\n", tecla);
 	//TODO processamento das teclas
 	switch(tecla){
 		case 'I': /*Zoom +*/
@@ -30,6 +44,36 @@ void teclado(int tecla)
 		case 'O': /*Zoom -*/
 		case 'o':
 			zoom -= 0.1f;
+			break;
+		case 't': /*Translate*/
+		case 'T':
+			/*TODO - Translacao
+			 * Setar o modo da aplicação para  MODE_TRANSLATE
+			*/
+			break;
+		case 'r': /*Rotate*/
+		case 'R':
+			/*TODO - Rotate
+			 * Setar o modo da aplicação para MODE_ROTATE
+ 			*/
+			break;
+		case 's':/*Scale*/
+		case 'S':
+			/*TODO - Scale
+			 * Setar o modo da aplicacao para MODE_SCALE
+ 			*/
+			break;
+		case CIMA:
+			printf("CIMA\n");
+			break;
+		case BAIXO:
+			printf("BAIXO\n");
+			break;
+		case ESQUERDA:
+			printf("ESQUERDA\n");
+			break;
+		case DIREITA:
+			printf("DIREITA\n");
 			break;
 	}
 	desenha();
