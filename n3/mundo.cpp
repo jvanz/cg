@@ -8,15 +8,13 @@ Mundo::Mundo(int id): ObjetoGrafico(id)
 {
 	cout << "Instanciando mundo" << endl;
 	Poligno * p = new Poligno(1);
-
 	Poligno *p2 = new Poligno(2);
 	VART::Point4D * ponto4 = new VART::Point4D(0,-10,0.0,1.0);
-	p2->AddPonto(ponto4);
+	p2->addPonto(ponto4);
 	VART::Point4D * ponto5 = new VART::Point4D(10,0,0.0,1.0);
-	p2->AddPonto(ponto5);
+	p2->addPonto(ponto5);
 	VART::Point4D * ponto6 = new VART::Point4D(-10,0,0.0,1.0);
-	p2->AddPonto(ponto6);
-
+	p2->addPonto(ponto6);
 	p->addObjGrafFilho(p2);
 	this->addObjGrafFilho(p);
 }

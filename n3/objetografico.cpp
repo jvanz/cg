@@ -55,7 +55,22 @@ void ObjetoGrafico::desenhaFilhos(void)
 	}
 }
 
-void ObjetoGrafico::AddPonto(VART::Point4D *p)
+void ObjetoGrafico::addPonto(VART::Point4D *p)
 {
 	this->ListaPontos.push_back(p);
+}
+
+void ObjetoGrafico::doTranslate(direcao dir, int valor)
+{
+	//TODO - Implementar
+}
+
+void ObjetoGrafico::doRotate(direcao dir, int valor)
+{
+	//TODO - Implementar
+}
+
+void ObjetoGrafico::doScale(int valor)
+{
+	//TODO - Implmentar
 }

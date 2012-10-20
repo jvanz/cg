@@ -5,6 +5,9 @@
 
 using namespace std;
 
+enum direcoes {CIMA,BAIXO,ESQUEDA,DIREITA};
+typedef enum direcoes direcao;
+
 class ObjetoGrafico
 {
 	private:
@@ -22,7 +25,10 @@ class ObjetoGrafico
 		int removeObjGrafFilho(int);
 		vector<ObjetoGrafico*> getFilhos(void);
 		void desenhaFilhos(void);
-		void AddPonto(VART::Point4D *);
+		void addPonto(VART::Point4D *);
+		void doTranslate(direcao,int);
+		void doRotate(direcao,int);
+		void doScale(int);
 	protected:
 		vector<VART::Point4D*> ListaPontos;
 		/**
