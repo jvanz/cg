@@ -12,6 +12,7 @@ class ObjetoGrafico
 {
 	private:
 		int id;
+		int selecionado;
 		vector<ObjetoGrafico*> filhos;
 	public:
 		ObjetoGrafico(int);
@@ -29,6 +30,8 @@ class ObjetoGrafico
 		void doTranslate(direcao,int);
 		void doRotate(direcao,int);
 		void doScale(int);
+		int isSelecionado();
+		void setSelecionado(int);
 	protected:
 		vector<VART::Point4D*> ListaPontos;
 		/**

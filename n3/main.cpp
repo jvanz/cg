@@ -8,8 +8,12 @@
 #include "mundo.h"
 using namespace std;
 
+enum modo {DEFAULT, ADD, REMOVE, SELECTED};
+typedef enum modo modo_app;
+
 static float zoom = 1.0;
 static Mundo mundo(0);
+static modo_app estado;
 
 int mousePosX, mousePosY;
 
@@ -18,7 +22,7 @@ int mousePosX, mousePosY;
 #define DIREITA 102
 #define ESQUERDA 100
 
-
+//enum direcao {ESQUERDA=100, CIMA,DIREITA,BAIXO};
 /*
  *TODO - Na enum dos modo da aplicacao deve ser adicionado os modos de
  * rotacao, escala e translacao ( MODE_ROTATE, MODE_SCALE, MODE_TRANSLATE )
@@ -64,17 +68,41 @@ void teclado(int tecla)
  			*/
 			break;
 		case CIMA:
-			printf("CIMA\n");
+			if(estado == SELECTED){
+				printf("CIMA\n");
+			}
 			break;
 		case BAIXO:
-			printf("BAIXO\n");
+			if(estado == SELECTED){
+				printf("BAIXO\n");
+			}
 			break;
 		case ESQUERDA:
-			printf("ESQUERDA\n");
+			if(estado == SELECTED){
+				printf("ESQUERDA\n");
+			}
 			break;
 		case DIREITA:
-			printf("DIREITA\n");
+			if(estado == SELECTED){
+				printf("DIREITA\n");
+			}
 			break;
+		case 'a':
+		case 'A':
+			estado = ADD;
+			break;
+		case 'm':
+		case 'M':
+			if(estado == SELECTED){
+				estado = REMOVE;
+			}else{
+				printf("Você deve selecionar um objeto primeiro!\n");
+			}
+			break;
+			
+		case 'c':
+		case 'C':
+			estado = SELECTED;
 	}
 	desenha();
 }

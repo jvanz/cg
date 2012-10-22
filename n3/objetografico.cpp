@@ -74,3 +74,13 @@ void ObjetoGrafico::doScale(int valor)
 {
 	//TODO - Implmentar
 }
+
+void ObjetoGrafico::setSelecionado(int selecionado)
+{
+	this->selecionado = selecionado;
+}
+
+int ObjetoGrafico::isSelecionado(void)
+{
+	return this->selecionado;
+}
