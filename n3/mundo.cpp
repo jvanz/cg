@@ -7,15 +7,6 @@
 Mundo::Mundo(int id): ObjetoGrafico(id)
 {
 	cout << "Instanciando mundo" << endl;
-	Poligno * p2 = new Poligno(2);
-	p2->setSelecionado(1);
-	VART::Point4D * ponto4 = new VART::Point4D(0,-10,0.0,1.0);
-	p2->addPonto(ponto4);
-	VART::Point4D * ponto5 = new VART::Point4D(10,0,0.0,1.0);
-	p2->addPonto(ponto5);
-	VART::Point4D * ponto6 = new VART::Point4D(-10,0,0.0,1.0);
-	p2->addPonto(ponto6);
-	this->addObjGrafFilho(p2);
 }
 
 /**
@@ -24,6 +15,7 @@ Mundo::Mundo(int id): ObjetoGrafico(id)
  */
 void Mundo::desenha()
 {
+	cout << "Filhos mundo " << this->getFilhos().size() << endl;
 	this->desenhaFilhos();	
 }
 

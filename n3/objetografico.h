@@ -1,6 +1,7 @@
 #include <vector>
 #include <GL/glut.h>
 #include "vart/point4d.h"
+#include "vart/transform.h"
 #include<iostream>
 
 using namespace std;
@@ -27,8 +28,8 @@ class ObjetoGrafico
 		vector<ObjetoGrafico*> getFilhos(void);
 		void desenhaFilhos(void);
 		void addPonto(VART::Point4D *);
-		void doTranslate(direcao,int);
-		void doRotate(direcao,int);
+		void doTranslate(int,int);
+		void doRotate(int,int);
 		void doScale(int);
 		int isSelecionado();
 		void setSelecionado(int);
@@ -37,6 +38,12 @@ class ObjetoGrafico
 		void setTodosSelecionadosFalse();
 	protected:
 		vector<VART::Point4D*> ListaPontos;
+		VART::Transform matrizObjeto;
+		VART::Transform matrizTranslacao;
+		VART::Transform matrizEscala;
+		VART::Transform matrizRotacao;
+		VART::Transform matrizTranslacaoInversa; 
+		VART::Transform matrizGlobal;
 		/**
 		 * R
 		 * Nivel de vermelho do objeto

@@ -26,6 +26,7 @@ int ObjetoGrafico::getId(void)
 int ObjetoGrafico::addObjGrafFilho(ObjetoGrafico* filho)
 {
 	this->filhos.push_back(filho);
+	cout << this->filhos.size() << endl;
 	return this->filhos.size() - 1;
 }
 
@@ -58,14 +59,20 @@ void ObjetoGrafico::desenhaFilhos(void)
 void ObjetoGrafico::addPonto(VART::Point4D *p)
 {
 	this->ListaPontos.push_back(p);
+	this->matrizObjeto.MakeIdentity();
 }
 
-void ObjetoGrafico::doTranslate(direcao dir, int valor)
+void ObjetoGrafico::doTranslate(int dir, int valor)
 {
+	cout << "Translate ";
+	if(dir == 1){
+		cout << "CIMA" << endl;
+		
+	}
 	//TODO - Implementar
 }
 
-void ObjetoGrafico::doRotate(direcao dir, int valor)
+void ObjetoGrafico::doRotate(int dir, int valor)
 {
 	//TODO - Implementar
 }

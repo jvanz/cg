@@ -8,14 +8,15 @@
 #include "mundo.h"
 using namespace std;
 
-enum modo {DEFAULT, ADD, REMOVE, SELECTED};
+enum modo {DEFAULT, ADD, REMOVE, SELECTED, TRANSLATE};
 typedef enum modo modo_app;
 
 static float zoom = 1.0;
-static Mundo mundo(0);
+Mundo * mundo;
 static modo_app estado;
-
+vector<VART::Point4D*> pontosNovoPoligno;
 int mousePosX, mousePosY;
+static int contador = 1;
 
 #define CIMA 101
 #define BAIXO 103
@@ -51,9 +52,8 @@ void teclado(int tecla)
 			break;
 		case 't': /*Translate*/
 		case 'T':
-			/*TODO - Translacao
-			 * Setar o modo da aplicação para  MODE_TRANSLATE
-			*/
+			estado = TRANSLATE;
+			cout << "Estado = TRANSLATE" << endl;
 			break;
 		case 'r': /*Rotate*/
 		case 'R':
@@ -68,8 +68,8 @@ void teclado(int tecla)
  			*/
 			break;
 		case CIMA:
-			if(estado == SELECTED){
-				printf("CIMA\n");
+			if(estado == TRANSLATE){
+				mundo->doTranslate(1,1);
 			}
 			break;
 		case BAIXO:
@@ -94,8 +94,8 @@ void teclado(int tecla)
 			break;
 		case 'm':
 		case 'M':
-			if(estado == SELECTED){
-				mundo.doDelete();
+			if(0){
+				mundo->doDelete();
 			}else{
 				cout << "Você deve selecionar um objeto primeiro!" << endl;
 			}
@@ -108,53 +108,65 @@ void teclado(int tecla)
 			break;
 		case '1':
 			if(estado == SELECTED){
-				mundo.apagaPonto(1);
+				mundo->apagaPonto(1);
 			}
 			break;
 		case '2':
 			if(estado == SELECTED){
-				mundo.apagaPonto(2);
+				mundo->apagaPonto(2);
 			}
 			break;
 		case '3':
 			if(estado == SELECTED){
-				mundo.apagaPonto(3);
+				mundo->apagaPonto(3);
 			}
 			break;
 		case '4':
 			if(estado == SELECTED){
-				mundo.apagaPonto(4);
+				mundo->apagaPonto(4);
 			}
 			break;
 		case '5':
 			if(estado == SELECTED){
-				mundo.apagaPonto(5);
+				mundo->apagaPonto(5);
 			}
 			break;
 		case '6':
 			if(estado == SELECTED){
-				mundo.apagaPonto(6);
+				mundo->apagaPonto(6);
 			}
 			break;
 		case '7':
 			if(estado == SELECTED){
-				mundo.apagaPonto(7);
+				mundo->apagaPonto(7);
 			}
 			break;
 		case '8':
 			if(estado == SELECTED){
-				mundo.apagaPonto(8);
+				mundo->apagaPonto(8);
 			}
 			break;
 		case '9':
 			if(estado == SELECTED){
-				mundo.apagaPonto(9);
+				mundo->apagaPonto(9);
 			}
 			break;
 		/*TODO - Melhorar essa porquice de apagar ponto!*/
 		case ESC:
+			if(pontosNovoPoligno.size() > 0){
+				cout << "Criando novo filho" << endl;
+				int index;
+				Poligno * p2 = new Poligno(contador);
+				p2->setSelecionado(1);
+				for(index = 0; index < pontosNovoPoligno.size(); index++){
+					p2->addPonto(pontosNovoPoligno[index]);
+				}
+				mundo->addObjGrafFilho(p2);
+				contador++;
+			}
 			estado = DEFAULT;
-			mundo.setTodosSelecionadosFalse();
+			mundo->setTodosSelecionadosFalse();
+			pontosNovoPoligno.clear();
 			cout << "Estado = DEFAULT" << endl;
 	}
 	desenha();
@@ -169,8 +181,7 @@ void desenha()
 	glLoadIdentity ();
 	glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	
-	//TODO - Desenha componentes de tela
-	mundo.desenha();
+	mundo->desenha();
 
 	glutSwapBuffers();
 }
@@ -193,7 +204,17 @@ void reshape (int w, int h)
 void inicializacao (void)
 {
 	glClearColor(1.0f,1.0f,1.0f,1.0);
-	glPointSize(3.f);
+	glPointSize(5.0f);
+	mundo = new Mundo(0);
+/*	Poligno * p2 = new Poligno(contador);
+	VART::Point4D * ponto4 = new VART::Point4D(0,-10,0.0,1.0);
+	p2->addPonto(ponto4);
+	VART::Point4D * ponto5 = new VART::Point4D(10,0,0.0,1.0);
+	p2->addPonto(ponto5);
+	VART::Point4D * ponto6 = new VART::Point4D(-10,0,0.0,1.0);
+	p2->addPonto(ponto6);
+	mundo->addObjGrafFilho(p2);*/
+	estado = DEFAULT;
 }
 
 /**
@@ -202,8 +223,27 @@ void inicializacao (void)
  */
 void buscaPosicaoTela(GLint x, GLint y)
 {
+	GLint viewport[4];
+	glGetIntegerv(GL_VIEWPORT,viewport);
 	mousePosX = x;
-	mousePosY = y;
+	mousePosY = viewport[3]-y;
+}
+
+void mouseEvento(GLint botao, GLint estadoEvento, GLint x, GLint y) {
+	if (estadoEvento == GLUT_DOWN) {
+		buscaPosicaoTela(x,y);
+		if(estado == ADD){
+			VART::Point4D * ponto = new VART::Point4D(mousePosX,mousePosY,0.0,1.0);
+			pontosNovoPoligno.push_back(ponto);
+		}
+	}
+	
+	glutPostRedisplay();
+}
+
+void mouseMovimento(GLint x, GLint y) {
+	mousePosX = x; mousePosY = y;
+  	glutPostRedisplay();    
 }
 
 int main (int argc, const char * argv[]) 
@@ -212,7 +252,7 @@ int main (int argc, const char * argv[])
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
 	glutInitWindowPosition (250, 200);
 	glutInitWindowSize (500, 500);
-	gluOrtho2D(-100, 100, -100, 100);
+	gluOrtho2D(0, 0, 0, 0);
 	(void)glutCreateWindow("Trabalho N3 - Jose Guilherme Vanz / Marcos Paulo de Souza");
 	inicializacao();
  
@@ -222,17 +262,9 @@ int main (int argc, const char * argv[])
  
 	glutKeyboardFunc(keyPressed);
 	glutSpecialFunc(keyPressedSpecial);
+	glutMotionFunc(mouseMovimento);
+	glutMouseFunc(mouseEvento);
 	glutMainLoop();
  
-	Poligno * p2 = new Poligno(2);
-	p2->setSelecionado(1);
-	VART::Point4D * ponto4 = new VART::Point4D(0,-10,0.0,1.0);
-	p2->addPonto(ponto4);
-	VART::Point4D * ponto5 = new VART::Point4D(10,0,0.0,1.0);
-	p2->addPonto(ponto5);
-	VART::Point4D * ponto6 = new VART::Point4D(-10,0,0.0,1.0);
-	p2->addPonto(ponto6);
-	mundo.addObjGrafFilho(p2);
-	estado - DEFAULT;
 	return 0;
 }
