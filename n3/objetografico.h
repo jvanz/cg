@@ -33,6 +33,7 @@ class ObjetoGrafico
 		int isSelecionado();
 		void setSelecionado(int);
 		void doDelete();
+		void apagaPonto(int);
 	protected:
 		vector<VART::Point4D*> ListaPontos;
 		/**

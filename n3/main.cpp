@@ -103,6 +103,52 @@ void teclado(int tecla)
 		case 'c':
 		case 'C':
 			estado = SELECTED;
+		case '1':
+			if(estado == SELECTED){
+				mundo.apagaPonto(1);
+			}
+			break;
+		case '2':
+			if(estado == SELECTED){
+				mundo.apagaPonto(2);
+			}
+			break;
+		case '3':
+			if(estado == SELECTED){
+				mundo.apagaPonto(3);
+			}
+			break;
+		case '4':
+			if(estado == SELECTED){
+				mundo.apagaPonto(4);
+			}
+			break;
+		case '5':
+			if(estado == SELECTED){
+				mundo.apagaPonto(5);
+			}
+			break;
+		case '6':
+			if(estado == SELECTED){
+				mundo.apagaPonto(6);
+			}
+			break;
+		case '7':
+			if(estado == SELECTED){
+				mundo.apagaPonto(7);
+			}
+			break;
+		case '8':
+			if(estado == SELECTED){
+				mundo.apagaPonto(8);
+			}
+			break;
+		case '9':
+			if(estado == SELECTED){
+				mundo.apagaPonto(9);
+			}
+			break;
+		/*TODO - Melhorar essa porquice de apagar ponto!*/
 	}
 	desenha();
 }
@@ -171,5 +217,15 @@ int main (int argc, const char * argv[])
 	glutSpecialFunc(keyPressedSpecial);
 	glutMainLoop();
  
+	Poligno * p2 = new Poligno(2);
+	p2->setSelecionado(1);
+	VART::Point4D * ponto4 = new VART::Point4D(0,-10,0.0,1.0);
+	p2->addPonto(ponto4);
+	VART::Point4D * ponto5 = new VART::Point4D(10,0,0.0,1.0);
+	p2->addPonto(ponto5);
+	VART::Point4D * ponto6 = new VART::Point4D(-10,0,0.0,1.0);
+	p2->addPonto(ponto6);
+	mundo.addObjGrafFilho(p2);
+	estado = SELECTED;
 	return 0;
 }
