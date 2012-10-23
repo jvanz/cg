@@ -15,7 +15,6 @@ Mundo::Mundo(int id): ObjetoGrafico(id)
  */
 void Mundo::desenha()
 {
-	cout << "Filhos mundo " << this->getFilhos().size() << endl;
 	this->desenhaFilhos();	
 }
 

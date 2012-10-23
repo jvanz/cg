@@ -26,7 +26,6 @@ int ObjetoGrafico::getId(void)
 int ObjetoGrafico::addObjGrafFilho(ObjetoGrafico* filho)
 {
 	this->filhos.push_back(filho);
-	cout << this->filhos.size() << endl;
 	return this->filhos.size() - 1;
 }
 
@@ -59,7 +58,7 @@ void ObjetoGrafico::desenhaFilhos(void)
 void ObjetoGrafico::addPonto(VART::Point4D *p)
 {
 	this->ListaPontos.push_back(p);
-	this->matrizObjeto.MakeIdentity();
+//	this->matrizObjeto.MakeIdentity();
 }
 
 void ObjetoGrafico::doTranslate(int dir, int valor)

@@ -24,7 +24,6 @@ static int contador = 1;
 #define ESQUERDA 100
 #define ESC 27
 
-//enum direcao {ESQUERDA=100, CIMA,DIREITA,BAIXO};
 /*
  *TODO - Na enum dos modo da aplicacao deve ser adicionado os modos de
  * rotacao, escala e translacao ( MODE_ROTATE, MODE_SCALE, MODE_TRANSLATE )
@@ -154,7 +153,6 @@ void teclado(int tecla)
 		/*TODO - Melhorar essa porquice de apagar ponto!*/
 		case ESC:
 			if(pontosNovoPoligno.size() > 0){
-				cout << "Criando novo filho" << endl;
 				int index;
 				Poligno * p2 = new Poligno(contador);
 				p2->setSelecionado(1);
@@ -169,11 +167,12 @@ void teclado(int tecla)
 			pontosNovoPoligno.clear();
 			cout << "Estado = DEFAULT" << endl;
 	}
-	desenha();
+	glutPostRedisplay();
 }
 
 void desenha()
 {
+	cout << "Desenhando" << endl;
 	glMatrixMode (GL_PROJECTION);
 	glLoadIdentity ();
 	gluOrtho2D(-20 * zoom, 20 * zoom, -20 * zoom, 20 * zoom);
@@ -182,7 +181,14 @@ void desenha()
 	glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	
 	mundo->desenha();
-
+	glColor3f(1.0, 0.0, 0.0);
+	int index;
+	for(index = 0; index < pontosNovoPoligno.size(); index++){
+		glBegin(GL_POINTS);
+		VART::Point4D * ponto = pontosNovoPoligno[index];
+		glVertex2f(ponto->GetX(),ponto->GetY());
+		glEnd();
+	}
 	glutSwapBuffers();
 }
 
@@ -206,7 +212,7 @@ void inicializacao (void)
 	glClearColor(1.0f,1.0f,1.0f,1.0);
 	glPointSize(5.0f);
 	mundo = new Mundo(0);
-/*	Poligno * p2 = new Poligno(contador);
+	/*Poligno * p2 = new Poligno(contador);
 	VART::Point4D * ponto4 = new VART::Point4D(0,-10,0.0,1.0);
 	p2->addPonto(ponto4);
 	VART::Point4D * ponto5 = new VART::Point4D(10,0,0.0,1.0);
