@@ -39,7 +39,6 @@ int mousePosX, mousePosY;
  * */
 void teclado(int tecla)
 {
-	printf("Tecla = %d\n", tecla);
 	//TODO processamento das teclas
 	switch(tecla){
 		case 'I': /*Zoom +*/
@@ -106,6 +105,7 @@ void teclado(int tecla)
 		case 'C':
 			estado = SELECTED;
 			cout << "Estado = SELECTED" << endl;
+			break;
 		case '1':
 			if(estado == SELECTED){
 				mundo.apagaPonto(1);
@@ -233,6 +233,6 @@ int main (int argc, const char * argv[])
 	VART::Point4D * ponto6 = new VART::Point4D(-10,0,0.0,1.0);
 	p2->addPonto(ponto6);
 	mundo.addObjGrafFilho(p2);
-	estado = SELECTED;
+	estado - DEFAULT;
 	return 0;
 }
