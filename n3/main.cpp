@@ -21,6 +21,7 @@ int mousePosX, mousePosY;
 #define BAIXO 103
 #define DIREITA 102
 #define ESQUERDA 100
+#define ESC 27
 
 //enum direcao {ESQUERDA=100, CIMA,DIREITA,BAIXO};
 /*
@@ -90,19 +91,21 @@ void teclado(int tecla)
 		case 'a':
 		case 'A':
 			estado = ADD;
+			cout << "Estado = ADD" << endl;
 			break;
 		case 'm':
 		case 'M':
-//	if(estado == SELECTED){
+			if(estado == SELECTED){
 				mundo.doDelete();
-//	}else{
-//		printf("Você deve selecionar um objeto primeiro!\n");
-//	}
+			}else{
+				cout << "Você deve selecionar um objeto primeiro!" << endl;
+			}
 			break;
 			
 		case 'c':
 		case 'C':
 			estado = SELECTED;
+			cout << "Estado = SELECTED" << endl;
 		case '1':
 			if(estado == SELECTED){
 				mundo.apagaPonto(1);
@@ -149,6 +152,10 @@ void teclado(int tecla)
 			}
 			break;
 		/*TODO - Melhorar essa porquice de apagar ponto!*/
+		case ESC:
+			estado = DEFAULT;
+			mundo.setTodosSelecionadosFalse();
+			cout << "Estado = DEFAULT" << endl;
 	}
 	desenha();
 }

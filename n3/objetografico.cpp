@@ -88,29 +88,20 @@ int ObjetoGrafico::isSelecionado(void)
 void ObjetoGrafico::doDelete(void)
 {
 	/*FIXME - double free or corruption*/
-	cout << "Executando doDelete do ID = " << this->getId() << endl;
-	cout << "Tamanho da lista = " << this->getFilhos().size() << endl;
 	int index;
 	for(index = 0; index < this->getFilhos().size(); index++){
 		if(this->getFilhos()[index]->isSelecionado()){
-			cout << "Filho " << this->getFilhos()[index]->getId() << " removido. Posição " << index << endl;
 			this->getFilhos().erase(this->getFilhos().begin());
 			break;
 		}
 	}
-	cout << "Tamanho da lista = " << this->getFilhos().size() << endl;
-	
 }
 
 void ObjetoGrafico::apagaPonto(int ponto)
 {
-	cout << "Qtd pontos poligno id = " << this->getId() << endl;
-	cout << "Apaga ponto " << ponto << endl;
 	int qtdPontos = this->ListaPontos.size();
 	if((this->isSelecionado()) & (ponto <= qtdPontos)){
 		this->ListaPontos.erase(this->ListaPontos.begin()+(ponto-1));
-		cout << "Ponto removido" << endl;
-		cout << "Qtd pontos poligno id = " << this->getId() << endl;
 	}else{
 		int index;
 		for(index = 0; index < this->getFilhos().size(); index++){
@@ -118,4 +109,13 @@ void ObjetoGrafico::apagaPonto(int ponto)
 		}
 	}
 
+}
+
+void ObjetoGrafico::setTodosSelecionadosFalse()
+{
+	this->setSelecionado(0);
+	int index;
+	for(index = 0; index < this->getFilhos().size(); index++){
+		this->getFilhos()[index]->setTodosSelecionadosFalse();
+	}
 }
