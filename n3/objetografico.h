@@ -32,6 +32,7 @@ class ObjetoGrafico
 		void doScale(int);
 		int isSelecionado();
 		void setSelecionado(int);
+		void doDelete();
 	protected:
 		vector<VART::Point4D*> ListaPontos;
 		/**

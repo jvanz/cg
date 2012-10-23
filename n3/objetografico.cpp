@@ -84,3 +84,18 @@ int ObjetoGrafico::isSelecionado(void)
 {
 	return this->selecionado;
 }
+
+void ObjetoGrafico::doDelete(void)
+{
+	int index;
+	for(index = 0; index < this->getFilhos().size(); index++){
+		if(this->getFilhos()[index]->isSelecionado()){
+			this->getFilhos().erase(this->getFilhos().begin()+index);
+			return;
+		}
+	}
+	for(index = 0; index < this->getFilhos().size(); index++){
+		this->getFilhos()[index]->doDelete();
+	}
+	
+}

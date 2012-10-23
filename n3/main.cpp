@@ -93,11 +93,11 @@ void teclado(int tecla)
 			break;
 		case 'm':
 		case 'M':
-			if(estado == SELECTED){
-				estado = REMOVE;
-			}else{
-				printf("Você deve selecionar um objeto primeiro!\n");
-			}
+//	if(estado == SELECTED){
+				mundo.doDelete();
+//	}else{
+//		printf("Você deve selecionar um objeto primeiro!\n");
+//	}
 			break;
 			
 		case 'c':

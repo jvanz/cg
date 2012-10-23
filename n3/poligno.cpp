@@ -2,17 +2,24 @@
 
 Poligno::Poligno(int id): ObjetoGrafico(id)
 {
-	VART::Point4D * ponto = new VART::Point4D(0,10,0.0,1.0);
-	this->ListaPontos.push_back(ponto);
-	VART::Point4D * ponto2 = new VART::Point4D(10,0,0.0,1.0);
-	this->ListaPontos.push_back(ponto2);
-	VART::Point4D * ponto3 = new VART::Point4D(-10,0,0.0,1.0);
-	this->ListaPontos.push_back(ponto3);
+	this->setSelecionado(0);
 }
 
 void Poligno::desenha(void)
 {
+	/*Desenha o ponto se o objeto estiver selecionado*/
 	int index;
+	if(this->isSelecionado()){
+		glPointSize(5.0f);
+		glColor3f(1.0, 0.0, 0.0);
+		for(index = 0; index < this->ListaPontos.size(); index++){
+			glBegin(GL_POINTS);
+			VART::Point4D * ponto = this->ListaPontos[index];
+			glVertex2f(ponto->GetX(),ponto->GetY());
+			glEnd();
+		}
+	}
+	/*Desenha o poligno*/
 	glColor3f(0.0, 0.0, 0.0);
 	glBegin(GL_POLYGON);
 		for(index = 0; index < this->ListaPontos.size(); index++){
