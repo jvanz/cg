@@ -154,14 +154,21 @@ BBox* ObjetoGrafico::getBBox(void)
 int ObjetoGrafico::selecionaObj(VART::Point4D * ponto)
 {
 	unsigned int index;
+
 	for(index = 0; index < this->getFilhos().size(); index++){
 		if(this->getFilhos()[index]->selecionaObj(ponto)){
 			return 1;
 		}
 	}
+
+	/* se for o mundo, não faz nada */
+	if (!this->getId())
+		return 0;
+
 	if(this->getBBox()->pontoEstaDentro(ponto)){
 		this->setSelecionado(1);
 		return 1;
 	}
+
 	return 0;
 }

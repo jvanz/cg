@@ -10,3 +10,6 @@ clean:
 
 doxy:
 	doxygen Doxyfile
+
+debug:
+	$(CC) $(FILES) $(ARGS) -o n3 -g
