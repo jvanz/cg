@@ -1,5 +1,6 @@
 #include "vart/point4d.h"
 #include <GL/glut.h>
+#include <limits.h>
 
 class BBox
 {
@@ -10,6 +11,7 @@ class BBox
 		int maxY;
 
 	public:
+		BBox(void);
 		int getMinX(void);
 		int getMaxX(void);
 		int getMinY(void);

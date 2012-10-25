@@ -1,5 +1,12 @@
 #include "bbox.h"
 
+BBox::BBox(void)
+{
+	this->minX = INT_MAX;
+	this->maxX = INT_MIN;
+	this->minY = INT_MAX;
+	this->maxY = INT_MIN;
+}
 
 int BBox::getMinX(void)
 {
@@ -43,8 +50,8 @@ void BBox::setMaxY(int y)
 
 int BBox::pontoEstaDentro(VART::Point4D * ponto)
 {
-	if((ponto->GetX() > this->minX & ponto->GetX() < this->maxX) &
-	   (ponto->GetY() > this->minY & ponto->GetY() < this->maxY)){
+	if(((ponto->GetX() > this->minX) & (ponto->GetX() < this->maxX)) &
+	   ((ponto->GetY() > this->minY) & (ponto->GetY() < this->maxY))){
 		return 1;
 	}
 	return 0;

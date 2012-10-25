@@ -160,7 +160,6 @@ void teclado(int tecla)
 			if(pontosNovoPoligno.size() > 0){
 				unsigned int index;
 				Poligno * p2 = new Poligno(contador);
-				p2->setSelecionado(1);
 				for(index = 0; index < pontosNovoPoligno.size(); index++){
 					p2->addPonto(pontosNovoPoligno[index]);
 				}
@@ -168,8 +167,8 @@ void teclado(int tecla)
 				contador++;
 			}
 			estado = DEFAULT;
-			mundo->setTodosSelecionadosFalse();
 			pontosNovoPoligno.clear();
+			mundo->setTodosSelecionadosFalse();
 			cout << "Estado = DEFAULT" << endl;
 	}
 	glutPostRedisplay();
@@ -177,7 +176,6 @@ void teclado(int tecla)
 
 void desenha()
 {
-	cout << "Desenhando" << endl;
 	glMatrixMode (GL_PROJECTION);
 	glLoadIdentity ();
 	gluOrtho2D(0, X_MAX, 0, Y_MAX);
@@ -225,14 +223,14 @@ void inicializacao (void)
 	glClearColor(1.0f,1.0f,1.0f,1.0);
 	glPointSize(5.0f);
 	mundo = new Mundo(0);
-	/*Poligno * p2 = new Poligno(contador);
-	VART::Point4D * ponto4 = new VART::Point4D(0,-10,0.0,1.0);
+	Poligno * p2 = new Poligno(contador);
+	VART::Point4D * ponto4 = new VART::Point4D(150.0,200.0,0.0,1.0);
 	p2->addPonto(ponto4);
-	VART::Point4D * ponto5 = new VART::Point4D(10,0,0.0,1.0);
+	VART::Point4D * ponto5 = new VART::Point4D(100.0,100.0,0.0,1.0);
 	p2->addPonto(ponto5);
-	VART::Point4D * ponto6 = new VART::Point4D(-10,0,0.0,1.0);
+	VART::Point4D * ponto6 = new VART::Point4D(200.0,100.0,0.0,1.0);
 	p2->addPonto(ponto6);
-	mundo->addObjGrafFilho(p2);*/
+	mundo->addObjGrafFilho(p2);
 	estado = DEFAULT;
 }
 
@@ -254,6 +252,10 @@ void mouseEvento(GLint botao, GLint estadoEvento, GLint x, GLint y) {
 		if(estado == ADD){
 			VART::Point4D * ponto = new VART::Point4D(mousePosX,mousePosY,0.0,1.0);
 			pontosNovoPoligno.push_back(ponto);
+		}else if(estado == SELECTED){
+			mundo->setTodosSelecionadosFalse();
+			VART::Point4D * ponto = new VART::Point4D(mousePosX,mousePosY,0.0,1.0);
+			mundo->selecionaObj(ponto);
 		}
 	}
 	

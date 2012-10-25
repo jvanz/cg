@@ -16,7 +16,7 @@ class ObjetoGrafico
 		int id;
 		int selecionado;
 		vector<ObjetoGrafico*> filhos;
-		BBox bBox;
+		BBox * bBox;
 
 		void initBBox(void);
 	public:
@@ -40,7 +40,8 @@ class ObjetoGrafico
 		void doDelete();
 		void apagaPonto(int);
 		void setTodosSelecionadosFalse();
-		BBox getBBox(void);
+		int selecionaObj(VART::Point4D *);
+		BBox* getBBox(void);
 	protected:
 		vector<VART::Point4D*> ListaPontos;
 		VART::Transform matrizObjeto;

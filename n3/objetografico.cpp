@@ -114,6 +114,7 @@ void ObjetoGrafico::apagaPonto(int ponto)
 			this->getFilhos()[index]->apagaPonto(ponto);
 		}
 	}
+	this->initBBox();
 
 }
 
@@ -129,28 +130,38 @@ void ObjetoGrafico::setTodosSelecionadosFalse()
 void ObjetoGrafico::initBBox(void)
 {
 	unsigned int index;	
-	int minX = -9999, maxX = 9999;
-	int minY = -9999, maxY = 9999;
+	bBox = new BBox();
 	for(index = 0; index < this->ListaPontos.size(); index++){
-		if(this->ListaPontos[index]->GetX() > maxX){
-			maxX = this->ListaPontos[index]->GetX();
-			continue;
+		if(this->ListaPontos[index]->GetX() > this->getBBox()->getMaxX()){
+			this->getBBox()->setMaxX(this->ListaPontos[index]->GetX());
 		}
-		if(this->ListaPontos[index]->GetX() < minX){
-			minX = this->ListaPontos[index]->GetX();
-			continue;
+		if(this->ListaPontos[index]->GetX() < this->getBBox()->getMinX()){
+			this->getBBox()->setMinX(this->ListaPontos[index]->GetX());
 		}
-		if(this->ListaPontos[index]->GetY() > maxY){
-			maxY = this->ListaPontos[index]->GetY();
-			continue;
+		if(this->ListaPontos[index]->GetY() > this->getBBox()->getMaxY()){
+			this->getBBox()->setMaxY(this->ListaPontos[index]->GetY());
 		}
-		if(this->ListaPontos[index]->GetY() < minY){
-			minY = this->ListaPontos[index]->GetY();
-			continue;
+		if(this->ListaPontos[index]->GetY() < this->getBBox()->getMinY()){
+			this->getBBox()->setMinY(this->ListaPontos[index]->GetY());
 		}
 	}
 }
-BBox ObjetoGrafico::getBBox(void)
+BBox* ObjetoGrafico::getBBox(void)
 {
 	return this->bBox;
+}
+
+int ObjetoGrafico::selecionaObj(VART::Point4D * ponto)
+{
+	unsigned int index;
+	for(index = 0; index < this->getFilhos().size(); index++){
+		if(this->getFilhos()[index]->selecionaObj(ponto)){
+			return 1;
+		}
+	}
+	if(this->getBBox()->pontoEstaDentro(ponto)){
+		this->setSelecionado(1);
+		return 1;
+	}
+	return 0;
 }
