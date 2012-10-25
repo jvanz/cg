@@ -6,6 +6,11 @@
 #include <iostream>
 #include "main.h"
 #include "mundo.h"
+
+/* Tamanho da tela */
+#define X_MAX 500
+#define Y_MAX 500
+
 using namespace std;
 
 enum modo {DEFAULT, ADD, REMOVE, SELECTED, TRANSLATE};
@@ -16,7 +21,6 @@ Mundo * mundo;
 static modo_app estado;
 vector<VART::Point4D*> pontosNovoPoligno;
 int mousePosX, mousePosY;
-GLfloat ortho2D_minX = 0.0f, ortho2D_maxX =  500.0f, ortho2D_minY = 0.0f, ortho2D_maxY =  500.0f;
 static int contador = 1;
 
 #define CIMA 101
@@ -176,7 +180,7 @@ void desenha()
 	cout << "Desenhando" << endl;
 	glMatrixMode (GL_PROJECTION);
 	glLoadIdentity ();
-	gluOrtho2D(ortho2D_minX, ortho2D_maxX, ortho2D_minY, ortho2D_maxY);
+	gluOrtho2D(0, X_MAX, 0, Y_MAX);
 	glMatrixMode (GL_MODELVIEW);
 	glLoadIdentity ();
 	glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -258,7 +262,7 @@ int main (int argc, const char * argv[])
 	glutInit(&argc, (char **)argv);
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
 	glutInitWindowPosition (250, 200);
-	glutInitWindowSize (500, 500);
+	glutInitWindowSize (X_MAX, Y_MAX);
 	(void)glutCreateWindow("Trabalho N3 - Jose Guilherme Vanz / Marcos Paulo de Souza");
 	inicializacao();
  
