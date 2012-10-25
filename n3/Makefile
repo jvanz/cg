@@ -1,6 +1,6 @@
 CC = g++
 ARGS = -Wall -lglut -lGLU -lGL -lm -lvart
-FILES = main.cpp objetografico.cpp poligno.cpp mundo.cpp
+FILES = main.cpp objetografico.cpp poligno.cpp mundo.cpp bbox.cpp
 
 all:
 	$(CC) $(FILES) $(ARGS) -o n3 
