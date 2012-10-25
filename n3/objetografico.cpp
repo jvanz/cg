@@ -49,7 +49,7 @@ vector<ObjetoGrafico*> ObjetoGrafico::getFilhos(void)
 
 void ObjetoGrafico::desenhaFilhos(void)
 {
-	int index;
+	unsigned int index;
 	for(index = 0; index < this->getFilhos().size(); index++){
 		this->getFilhos()[index]->desenha();
 	}
@@ -94,7 +94,7 @@ int ObjetoGrafico::isSelecionado(void)
 void ObjetoGrafico::doDelete(void)
 {
 	/*FIXME - double free or corruption*/
-	int index;
+	unsigned int index;
 	for(index = 0; index < this->getFilhos().size(); index++){
 		if(this->getFilhos()[index]->isSelecionado()){
 			this->getFilhos().erase(this->getFilhos().begin());
@@ -109,7 +109,7 @@ void ObjetoGrafico::apagaPonto(int ponto)
 	if((this->isSelecionado()) & (ponto-1 < qtdPontos)){
 		this->ListaPontos.erase(this->ListaPontos.begin()+(ponto-1));
 	}else{
-		int index;
+		unsigned int index;
 		for(index = 0; index < this->getFilhos().size(); index++){
 			this->getFilhos()[index]->apagaPonto(ponto);
 		}
@@ -120,7 +120,7 @@ void ObjetoGrafico::apagaPonto(int ponto)
 void ObjetoGrafico::setTodosSelecionadosFalse()
 {
 	this->setSelecionado(0);
-	int index;
+	unsigned int index;
 	for(index = 0; index < this->getFilhos().size(); index++){
 		this->getFilhos()[index]->setTodosSelecionadosFalse();
 	}

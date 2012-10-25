@@ -8,7 +8,7 @@ Poligno::Poligno(int id): ObjetoGrafico(id)
 void Poligno::desenha(void)
 {
 	/*Desenha o ponto se o objeto estiver selecionado*/
-	int index;
+	unsigned int index;
 	if(this->isSelecionado()){
 		glColor3f(1.0, 0.0, 0.0);
 		for(index = 0; index < this->ListaPontos.size(); index++){

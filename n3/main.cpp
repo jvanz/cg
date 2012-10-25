@@ -153,7 +153,7 @@ void teclado(int tecla)
 		/*TODO - Melhorar essa porquice de apagar ponto!*/
 		case ESC:
 			if(pontosNovoPoligno.size() > 0){
-				int index;
+				unsigned int index;
 				Poligno * p2 = new Poligno(contador);
 				p2->setSelecionado(1);
 				for(index = 0; index < pontosNovoPoligno.size(); index++){
@@ -182,7 +182,7 @@ void desenha()
 	
 	mundo->desenha();
 	glColor3f(1.0, 0.0, 0.0);
-	int index;
+	unsigned int index;
 	for(index = 0; index < pontosNovoPoligno.size(); index++){
 		glBegin(GL_POINTS);
 		VART::Point4D * ponto = pontosNovoPoligno[index];
