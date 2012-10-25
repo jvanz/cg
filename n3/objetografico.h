@@ -16,7 +16,7 @@ class ObjetoGrafico
 		int id;
 		int selecionado;
 		vector<ObjetoGrafico*> filhos;
-		BBox * bBox;
+		BBox *bBox;
 
 		void initBBox(void);
 	public:

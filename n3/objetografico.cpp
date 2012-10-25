@@ -73,7 +73,13 @@ void ObjetoGrafico::doTranslate(int dir, int valor)
 
 void ObjetoGrafico::doRotate(int dir, int valor)
 {
-	//TODO - Implementar
+	VART::Point4D p = *this->getBBox()->getCentroObj();
+
+	this->matrizRotacao.MakeZRotation(5);
+	this->matrizTranslacaoInversa.MakeTranslation(p);
+
+	p = -p;
+	this->matrizObjeto = this->matrizObjeto * (this->matrizTranslacaoInversa * (matrizEscala * matrizTranslacao));
 }
 
 void ObjetoGrafico::doScale(int valor)
