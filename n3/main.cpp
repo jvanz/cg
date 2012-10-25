@@ -180,7 +180,7 @@ void desenha()
 	cout << "Desenhando" << endl;
 	glMatrixMode (GL_PROJECTION);
 	glLoadIdentity ();
-	gluOrtho2D(0, X_MAX, 0, Y_MAX);
+	gluOrtho2D(0, X_MAX * zoom, 0, Y_MAX * zoom);
 	glMatrixMode (GL_MODELVIEW);
 	glLoadIdentity ();
 	glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
