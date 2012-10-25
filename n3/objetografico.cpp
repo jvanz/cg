@@ -57,8 +57,8 @@ void ObjetoGrafico::desenhaFilhos(void)
 
 void ObjetoGrafico::addPonto(VART::Point4D *p)
 {
-	this->ListaPontos.push_back(p);
-//	this->matrizObjeto.MakeIdentity();
+	this->ListaPontos.push_back(p);	
+	this->initBBox();
 }
 
 void ObjetoGrafico::doTranslate(int dir, int valor)
@@ -124,4 +124,33 @@ void ObjetoGrafico::setTodosSelecionadosFalse()
 	for(index = 0; index < this->getFilhos().size(); index++){
 		this->getFilhos()[index]->setTodosSelecionadosFalse();
 	}
+}
+
+void ObjetoGrafico::initBBox(void)
+{
+	unsigned int index;	
+	int minX = -9999, maxX = 9999;
+	int minY = -9999, maxY = 9999;
+	for(index = 0; index < this->ListaPontos.size(); index++){
+		if(this->ListaPontos[index]->GetX() > maxX){
+			maxX = this->ListaPontos[index]->GetX();
+			continue;
+		}
+		if(this->ListaPontos[index]->GetX() < minX){
+			minX = this->ListaPontos[index]->GetX();
+			continue;
+		}
+		if(this->ListaPontos[index]->GetY() > maxY){
+			maxY = this->ListaPontos[index]->GetY();
+			continue;
+		}
+		if(this->ListaPontos[index]->GetY() < minY){
+			minY = this->ListaPontos[index]->GetY();
+			continue;
+		}
+	}
+}
+BBox ObjetoGrafico::getBBox(void)
+{
+	return this->bBox;
 }

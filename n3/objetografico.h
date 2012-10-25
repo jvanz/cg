@@ -2,7 +2,8 @@
 #include <GL/glut.h>
 #include "vart/point4d.h"
 #include "vart/transform.h"
-#include<iostream>
+#include <iostream>
+#include "bbox.h"
 
 using namespace std;
 
@@ -15,6 +16,9 @@ class ObjetoGrafico
 		int id;
 		int selecionado;
 		vector<ObjetoGrafico*> filhos;
+		BBox bBox;
+
+		void initBBox(void);
 	public:
 		ObjetoGrafico(int);
 		/**
@@ -36,6 +40,7 @@ class ObjetoGrafico
 		void doDelete();
 		void apagaPonto(int);
 		void setTodosSelecionadosFalse();
+		BBox getBBox(void);
 	protected:
 		vector<VART::Point4D*> ListaPontos;
 		VART::Transform matrizObjeto;
