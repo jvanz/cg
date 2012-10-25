@@ -1,42 +1,42 @@
 #include "bbox.h"
 
 
-GLfloat BBox::getMinX(void)
+int BBox::getMinX(void)
 {
 	return this->minX;
 }
 
-GLfloat BBox::getMaxX(void)
+int BBox::getMaxX(void)
 {
 	return this->maxX;
 }
 
-GLfloat BBox::getMinY(void)
+int BBox::getMinY(void)
 {
 	return this->minY;
 }
 
-GLfloat BBox::getMaxY(void)
+int BBox::getMaxY(void)
 {
 	return this->maxY;
 }
 
-void BBox::setMinX(GLfloat x)
+void BBox::setMinX(int x)
 {
 	this->minX = x;
 }
 
-void BBox::setMaxX(GLfloat x)
+void BBox::setMaxX(int x)
 {
 	this->maxX = x;
 }
 
-void BBox::setMinY(GLfloat y)
+void BBox::setMinY(int y)
 {
 	this->minY = y;
 }
 
-void BBox::setMaxY(GLfloat y)
+void BBox::setMaxY(int y)
 {
 	this->maxY = y;
 }
