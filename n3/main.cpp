@@ -190,6 +190,14 @@ void desenha()
 		glVertex2f(ponto->GetX(),ponto->GetY());
 		glEnd();
 	}
+	if(pontosNovoPoligno.size() > 1){
+		glBegin(GL_LINE_STRIP);
+		for(index = 0; index < pontosNovoPoligno.size(); index++){
+			VART::Point4D * ponto = pontosNovoPoligno[index];
+			glVertex2f(ponto->GetX(),ponto->GetY());
+		}
+		glEnd();
+	}
 	glutSwapBuffers();
 }
 
