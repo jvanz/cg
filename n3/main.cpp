@@ -16,7 +16,7 @@ Mundo * mundo;
 static modo_app estado;
 vector<VART::Point4D*> pontosNovoPoligno;
 int mousePosX, mousePosY;
-GLfloat ortho2D_minX = 0.0f, ortho2D_maxX =  800.0f, ortho2D_minY = 0.0f, ortho2D_maxY =  800.0f;
+GLfloat ortho2D_minX = 0.0f, ortho2D_maxX =  500.0f, ortho2D_minY = 0.0f, ortho2D_maxY =  500.0f;
 static int contador = 1;
 
 #define CIMA 101
@@ -177,7 +177,6 @@ void desenha()
 	glMatrixMode (GL_PROJECTION);
 	glLoadIdentity ();
 	gluOrtho2D(ortho2D_minX, ortho2D_maxX, ortho2D_minY, ortho2D_maxY);
-//	gluOrtho2D(0.0,800.0 * zoom,0.0 * zoom, 800.0 * zoom);
 	glMatrixMode (GL_MODELVIEW);
 	glLoadIdentity ();
 	glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
