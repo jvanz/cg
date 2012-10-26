@@ -145,21 +145,6 @@ void ObjetoGrafico::doDelete(void)
 	}
 }
 
-void ObjetoGrafico::apagaPonto(int ponto)
-{
-	int qtdPontos = this->ListaPontos.size();
-	if((this->isSelecionado()) & (ponto-1 < qtdPontos)){
-		this->ListaPontos.erase(this->ListaPontos.begin()+(ponto-1));
-	}else{
-		unsigned int index;
-		for(index = 0; index < this->getFilhos().size(); index++){
-			this->getFilhos()[index]->apagaPonto(ponto);
-		}
-	}
-	this->initBBox();
-
-}
-
 void ObjetoGrafico::setTodosSelecionadosFalse()
 {
 	this->setSelecionado(0);

@@ -40,7 +40,6 @@ class ObjetoGrafico
 		int isSelecionado();
 		void setSelecionado(int);
 		void doDelete();
-		void apagaPonto(int);
 		void setTodosSelecionadosFalse();
 		int selecionaObj(VART::Point4D *);
 		BBox* getBBox(void);
