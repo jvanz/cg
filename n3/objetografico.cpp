@@ -104,20 +104,6 @@ int ObjetoGrafico::isSelecionado(void)
 
 void ObjetoGrafico::doDelete(void)
 {
-	/*FIXME - double free or corruption
-	unsigned int index;
-	int remover;
-	for(index = 0; index < this->getFilhos().size(); index++){
-		if(this->getFilhos()[index]->isSelecionado()){
-			remover = index;
-			break;
-		}
-		remover = -1;
-	}
-	if(remover > -1)
-		this->getFilhos().erase(this->getFilhos().begin()+remover);
-	*/
-	cout << "Antes " << this->getFilhos().size() << endl;
 	unsigned int index;	
 	vector<ObjetoGrafico*> novosFilhos; /*O desespero faz coisa :( */
 	for(index = 0; index < this->getFilhos().size(); index++){
@@ -126,7 +112,7 @@ void ObjetoGrafico::doDelete(void)
 		}
 	}
 	this->filhos = novosFilhos;
-	cout << "Depois " <<  this->getFilhos().size() << endl;
+
 	for(index = 0; index < this->getFilhos().size(); index++){
 		this->getFilhos()[index]->doDelete();
 	}
