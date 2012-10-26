@@ -33,6 +33,7 @@ class ObjetoGrafico
 		vector<ObjetoGrafico*> getFilhos(void);
 		void desenhaFilhos(void);
 		void addPonto(VART::Point4D *);
+		void removePonto(VART::Point4D *p);
 		void doTranslate(int,int);
 		void doRotate(int,int);
 		void doScale(int);

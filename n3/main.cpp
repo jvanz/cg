@@ -13,7 +13,7 @@
 
 using namespace std;
 
-enum modo {DEFAULT, ADD, REMOVE, SELECTED, ADD_IN_SELECTED, TRANSLATE};
+enum modo {DEFAULT, ADD, REMOVE, SELECTED, ADD_IN_SELECTED, TRANSLATE, RM_VERTEX};
 typedef enum modo modo_app;
 
 static float zoom = 1.0;
@@ -109,7 +109,11 @@ void teclado(int tecla)
 				cout << "Você deve selecionar um objeto primeiro!" << endl;
 			}
 			break;
-			
+		case 'v':
+		case 'V':
+			estado = RM_VERTEX;
+			cout << "Estado = RM_VERTEX" << endl;
+			break;
 		case 'c':
 		case 'C':
 			estado = SELECTED;
@@ -233,6 +237,9 @@ void mouseEvento(GLint botao, GLint estadoEvento, GLint x, GLint y) {
 			mundo->setTodosSelecionadosFalse();
 			VART::Point4D * ponto = new VART::Point4D(mousePosX,mousePosY,0.0,1.0);
 			mundo->selecionaObj(ponto);
+		}else if (estado == RM_VERTEX) {
+			VART::Point4D * ponto = new VART::Point4D(mousePosX,mousePosY,0.0,1.0);
+			mundo->removePonto(ponto);
 		}
 	}
 	
