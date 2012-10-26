@@ -208,14 +208,6 @@ void inicializacao (void)
 	glClearColor(1.0f,1.0f,1.0f,1.0);
 	glPointSize(5.0f);
 	mundo = new Mundo(0);
-	/*Poligno * p2 = new Poligno(contador);
-	VART::Point4D * ponto4 = new VART::Point4D(150.0,200.0,0.0,1.0);
-	p2->addPonto(ponto4);
-	VART::Point4D * ponto5 = new VART::Point4D(100.0,100.0,0.0,1.0);
-	p2->addPonto(ponto5);
-	VART::Point4D * ponto6 = new VART::Point4D(200.0,100.0,0.0,1.0);
-	p2->addPonto(ponto6);
-	mundo->addObjGrafFilho(p2);*/
 	estado = DEFAULT;
 }
 
