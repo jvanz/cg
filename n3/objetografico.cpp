@@ -113,13 +113,13 @@ void ObjetoGrafico::doDelete(void)
 	*/
 	cout << "Antes " << this->getFilhos().size() << endl;
 	unsigned int index;	
+	vector<ObjetoGrafico*> novosFilhos; /*O desespero faz coisa :( */
 	for(index = 0; index < this->getFilhos().size(); index++){
-		if(this->getFilhos()[index]->isSelecionado()){
-//			vector<ObjetoGrafico*>::iterator it = this->getFilhos().begin()+index;
-			delete * (this->getFilhos().begin() + index);
-			this->getFilhos().erase(this->getFilhos().begin() + index);
+		if(!this->getFilhos()[index]->isSelecionado()){
+			novosFilhos.push_back(this->getFilhos()[index]);	
 		}
 	}
+	this->filhos = novosFilhos;
 	cout << "Depois " <<  this->getFilhos().size() << endl;
 	for(index = 0; index < this->getFilhos().size(); index++){
 		this->getFilhos()[index]->doDelete();
