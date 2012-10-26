@@ -26,6 +26,7 @@ int ObjetoGrafico::getId(void)
 int ObjetoGrafico::addObjGrafFilho(ObjetoGrafico* filho)
 {
 	this->filhos.push_back(filho);
+	cout << "Adicionando filho no obj ID = " << this->getId() << ". Total filhos = " << this->filhos.size() << endl;
 	return this->filhos.size() - 1;
 }
 
@@ -99,13 +100,30 @@ int ObjetoGrafico::isSelecionado(void)
 
 void ObjetoGrafico::doDelete(void)
 {
-	/*FIXME - double free or corruption*/
+	/*FIXME - double free or corruption
 	unsigned int index;
+	int remover;
 	for(index = 0; index < this->getFilhos().size(); index++){
 		if(this->getFilhos()[index]->isSelecionado()){
-			this->getFilhos().erase(this->getFilhos().begin());
+			remover = index;
 			break;
 		}
+		remover = -1;
+	}
+	if(remover > -1)
+		this->getFilhos().erase(this->getFilhos().begin()+remover);
+	*/
+
+	vector<ObjetoGrafico*>::iterator begin = this->getFilhos().begin();
+	while(begin != this->getFilhos.end()){
+		if(begin->isSelecionado()){
+			this->getFilhos().erase(begin);
+		}
+		begin++;
+	}
+	
+	for(index = 0; index < this->getFilhos().size(); index++){
+		this->getFilhos()[index]->doDelete();
 	}
 }
 
@@ -177,4 +195,19 @@ int ObjetoGrafico::selecionaObj(VART::Point4D * ponto)
 	}
 
 	return 0;
+}
+
+ObjetoGrafico* ObjetoGrafico::getObjSelecionado(void)
+{
+	if(this->isSelecionado())
+		return this;
+
+	ObjetoGrafico * obj;
+	unsigned int index;
+	for(index = 0; index < this->getFilhos().size(); index++){
+		obj = this->getFilhos()[index]->getObjSelecionado();
+		if(obj)
+			return obj;
+	}
+	return NULL;
 }
