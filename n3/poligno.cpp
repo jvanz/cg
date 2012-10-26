@@ -25,7 +25,7 @@ void Poligno::desenha(void)
 		glEnd();
 	}
 	/*Desenha o poligno*/
-	glColor3f(0.0, 0.0, 0.0);
+	glColor3f(r,g,b);
 	glBegin(GL_POLYGON);
 		for(index = 0; index < this->ListaPontos.size(); index++){
 			VART::Point4D * ponto = this->ListaPontos[index];

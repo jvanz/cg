@@ -8,6 +8,13 @@
 ObjetoGrafico::ObjetoGrafico(int id)
 {
 	this->id = id;
+	srand(time(NULL));
+	float random = ((float) rand()) / (float) RAND_MAX;	
+	r = (random* (0.9 - 0.1)) + 0.1;
+	random = ((float) rand()) / (float) RAND_MAX;	
+	g = (random* (0.9 - 0.1)) + 0.1;
+	random = ((float) rand()) / (float) RAND_MAX;	
+	b = (random* (0.9 - 0.1)) + 0.1;
 }
 
 ObjetoGrafico::~ObjetoGrafico(void)
