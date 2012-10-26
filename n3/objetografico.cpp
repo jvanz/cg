@@ -63,7 +63,8 @@ void ObjetoGrafico::desenhaFilhos(void)
 {
 	unsigned int index;
 	for(index = 0; index < this->getFilhos().size(); index++){
-		this->getFilhos()[index]->desenha();
+		if (this->getFilhos()[index]->ListaPontos.size() > 2)
+			this->getFilhos()[index]->desenha();
 	}
 }
 
@@ -76,25 +77,20 @@ void ObjetoGrafico::addPonto(VART::Point4D *p)
 void ObjetoGrafico::removePonto(VART::Point4D *p)
 {
 	vector<VART::Point4D*>::iterator it;
-	it = ListaPontos.begin();
+	it = this->ListaPontos.begin();
 
-	for (;it < ListaPontos.end(); it++) {
-		if (((*it)->GetX() <= p->GetX() + 5 &&
-		     (*it)->GetY() <= p->GetY() + 5) ||
-		    ((*it)->GetX() <= p->GetX() - 5 &&
-		     (*it)->GetY() <= p->GetY() - 5)) {
-			cout << "Apagou vertice do obj " << this->getId() << endl;
-			ListaPontos.erase(it);
-				
-			/* se temos apenas dis vertices, nao temos mais 
-			   um poligno, entao podemos apagar os vertices */
-			if (ListaPontos.size() == 2)
-				ListaPontos.clear();
-		}
-	}
+	for (;it < this->ListaPontos.end(); it++)
+		if (((*it)->GetX() <= p->GetX() + 5 && (*it)->GetY() <= p->GetY() + 5) &&
+		    ((*it)->GetX() >= p->GetX() - 5 && (*it)->GetY() >= p->GetY() - 5))
+			this->ListaPontos.erase(it);
 
 	for (unsigned int i = 0; i < this->getFilhos().size(); i++)
 		this->getFilhos()[i]->removePonto(p);
+
+	/* se temos apenas dis vertices, nao temos mais 
+	   um poligno, entao podemos apagar os vertices */
+	if (this->ListaPontos.size() == 2)
+		this->ListaPontos.clear();
 }
 
 void ObjetoGrafico::doTranslate(int dir, int valor)
