@@ -21,6 +21,7 @@ class ObjetoGrafico
 		void initBBox(void);
 	public:
 		ObjetoGrafico(int);
+		~ObjetoGrafico(void);
 		/**
 		 * desenha
 		 * Método abstrato para desenhar todos os objetos filhos

@@ -10,6 +10,10 @@ ObjetoGrafico::ObjetoGrafico(int id)
 	this->id = id;
 }
 
+ObjetoGrafico::~ObjetoGrafico(void)
+{
+}
+
 /**
  * getID
  * Retorna ID relacionado ao objeto
@@ -107,15 +111,16 @@ void ObjetoGrafico::doDelete(void)
 	if(remover > -1)
 		this->getFilhos().erase(this->getFilhos().begin()+remover);
 	*/
-
-	vector<ObjetoGrafico*>::iterator begin = this->getFilhos().begin();
-	while(begin != this->getFilhos.end()){
-		if(begin->isSelecionado()){
-			this->getFilhos().erase(begin);
+	cout << "Antes " << this->getFilhos().size() << endl;
+	unsigned int index;	
+	for(index = 0; index < this->getFilhos().size(); index++){
+		if(this->getFilhos()[index]->isSelecionado()){
+//			vector<ObjetoGrafico*>::iterator it = this->getFilhos().begin()+index;
+			delete * (this->getFilhos().begin() + index);
+			this->getFilhos().erase(this->getFilhos().begin() + index);
 		}
-		begin++;
 	}
-	
+	cout << "Depois " <<  this->getFilhos().size() << endl;
 	for(index = 0; index < this->getFilhos().size(); index++){
 		this->getFilhos()[index]->doDelete();
 	}
