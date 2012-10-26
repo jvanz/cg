@@ -56,7 +56,7 @@ class ObjetoGrafico
 		 * R
 		 * Nivel de vermelho do objeto
 		 */
-		int r, 
+		float r, 
 		/**
 		 * G
 		 * Nivel de verde do objeto
