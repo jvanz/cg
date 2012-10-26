@@ -1,5 +1,9 @@
 #include"poligno.h"
 
+/**
+ * Poligno::Poligno
+ * Construtor padrão do objeto poligno
+ */
 Poligno::Poligno(int id): ObjetoGrafico(id)
 {
 	this->setSelecionado(0);

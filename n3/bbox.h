@@ -2,6 +2,7 @@
 #include <GL/glut.h>
 #include <limits.h>
 
+/// Limites do objeto no mundo
 class BBox
 {
 	private:

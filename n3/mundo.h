@@ -7,6 +7,7 @@
 
 #include "poligno.h"
 
+/// Base para todos os objetos do mundo
 class Mundo: public ObjetoGrafico
 {
 	private:
