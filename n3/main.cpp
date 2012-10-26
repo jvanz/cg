@@ -13,7 +13,7 @@
 
 using namespace std;
 
-enum modo {DEFAULT, ADD, REMOVE, SELECTED, TRANSLATE};
+enum modo {DEFAULT, ADD, REMOVE, SELECTED, ADD_IN_SELECTED, TRANSLATE};
 typedef enum modo modo_app;
 
 static float zoom = 1.0;
@@ -93,12 +93,17 @@ void teclado(int tecla)
 			break;
 		case 'a':
 		case 'A':
-			estado = ADD;
-			cout << "Estado = ADD" << endl;
+			if(estado == SELECTED){
+				estado = ADD_IN_SELECTED;
+				cout << "Estado = ADD_IN_SELECTED" << endl;
+			}else{
+				estado = ADD;
+				cout << "Estado = ADD" << endl;
+			}
 			break;
 		case 'm':
 		case 'M':
-			if(0){
+			if(estado == SELECTED){
 				mundo->doDelete();
 			}else{
 				cout << "Você deve selecionar um objeto primeiro!" << endl;
@@ -111,60 +116,40 @@ void teclado(int tecla)
 			cout << "Estado = SELECTED" << endl;
 			break;
 		case '1':
-			if(estado == SELECTED){
-				mundo->apagaPonto(1);
-			}
 			break;
 		case '2':
-			if(estado == SELECTED){
-				mundo->apagaPonto(2);
-			}
 			break;
 		case '3':
-			if(estado == SELECTED){
-				mundo->apagaPonto(3);
-			}
 			break;
 		case '4':
-			if(estado == SELECTED){
-				mundo->apagaPonto(4);
-			}
 			break;
 		case '5':
-			if(estado == SELECTED){
-				mundo->apagaPonto(5);
-			}
 			break;
 		case '6':
-			if(estado == SELECTED){
-				mundo->apagaPonto(6);
-			}
 			break;
 		case '7':
-			if(estado == SELECTED){
-				mundo->apagaPonto(7);
-			}
 			break;
 		case '8':
-			if(estado == SELECTED){
-				mundo->apagaPonto(8);
-			}
 			break;
 		case '9':
-			if(estado == SELECTED){
-				mundo->apagaPonto(9);
-			}
 			break;
 		/*TODO - Melhorar essa porquice de apagar ponto!*/
 		case ESC:
 			if(pontosNovoPoligno.size() > 0){
+				ObjetoGrafico * obj;
+				if(estado == ADD_IN_SELECTED){
+					obj = mundo->getObjSelecionado();
+				}else{
+					obj = mundo;
+				}
 				unsigned int index;
 				Poligno * p2 = new Poligno(contador);
 				for(index = 0; index < pontosNovoPoligno.size(); index++){
 					p2->addPonto(pontosNovoPoligno[index]);
 				}
-				mundo->addObjGrafFilho(p2);
+				obj->addObjGrafFilho(p2);
 				contador++;
+				cout << "Contador = " << contador << endl;
 			}
 			estado = DEFAULT;
 			pontosNovoPoligno.clear();
@@ -223,14 +208,14 @@ void inicializacao (void)
 	glClearColor(1.0f,1.0f,1.0f,1.0);
 	glPointSize(5.0f);
 	mundo = new Mundo(0);
-	Poligno * p2 = new Poligno(contador);
+	/*Poligno * p2 = new Poligno(contador);
 	VART::Point4D * ponto4 = new VART::Point4D(150.0,200.0,0.0,1.0);
 	p2->addPonto(ponto4);
 	VART::Point4D * ponto5 = new VART::Point4D(100.0,100.0,0.0,1.0);
 	p2->addPonto(ponto5);
 	VART::Point4D * ponto6 = new VART::Point4D(200.0,100.0,0.0,1.0);
 	p2->addPonto(ponto6);
-	mundo->addObjGrafFilho(p2);
+	mundo->addObjGrafFilho(p2);*/
 	estado = DEFAULT;
 }
 
@@ -249,7 +234,7 @@ void buscaPosicaoTela(GLint x, GLint y)
 void mouseEvento(GLint botao, GLint estadoEvento, GLint x, GLint y) {
 	if (estadoEvento == GLUT_DOWN) {
 		buscaPosicaoTela(x,y);
-		if(estado == ADD){
+		if((estado == ADD) | (estado == ADD_IN_SELECTED)){
 			VART::Point4D * ponto = new VART::Point4D(mousePosX,mousePosY,0.0,1.0);
 			pontosNovoPoligno.push_back(ponto);
 		}else if(estado == SELECTED){

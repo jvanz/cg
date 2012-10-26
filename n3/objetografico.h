@@ -42,6 +42,7 @@ class ObjetoGrafico
 		void setTodosSelecionadosFalse();
 		int selecionaObj(VART::Point4D *);
 		BBox* getBBox(void);
+		ObjetoGrafico* getObjSelecionado(void);
 	protected:
 		vector<VART::Point4D*> ListaPontos;
 		VART::Transform matrizObjeto;
