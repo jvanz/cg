@@ -1,6 +1,6 @@
 CC = clang
 ARGS = -Wall -lglut -lGLU -lGL -lm
-FILES = main.cpp
+FILES = main.cpp glm.c
 
 all:
 	$(CC) $(FILES) $(ARGS) -o n4 
