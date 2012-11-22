@@ -1,4 +1,4 @@
-CC = clang
+CC = g++
 ARGS = -Wall -lglut -lGLU -lGL -lm
 FILES = main.cpp glm.c
 
@@ -10,3 +10,6 @@ clean:
 
 debug:
 	$(CC) $(FILES) $(ARGS) -o n4 -g
+
+terra:
+	$(CC) terra.cpp glm.c $(ARGS) -o terra
