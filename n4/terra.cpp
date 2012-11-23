@@ -24,9 +24,26 @@ void desenha(void)
 void
 screen_display(void)
 {
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    desenha();
-    glutSwapBuffers();
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+//	gluLoookAt(10,10,10,10,10,10,0,1,0);
+	desenha();
+	glutSwapBuffers();
+}
+
+void reshape(int width, int height)
+{
+}
+
+void inicializacao(void)
+{
+	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_LIGHTING);
+	glEnable(GL_LIGHT0);
+
+//	Posiciona luz 
+// 	glLightfv(GL_LIGHT0, GL_POSITION, lightpos);
+
+
 }
 
 int main(int argc, char *argv[])
@@ -36,8 +53,16 @@ int main(int argc, char *argv[])
         glutInitWindowPosition (250, 200);
         glutInitWindowSize (300, 300);
         (void)glutCreateWindow("Trabalho N4 - Jose Guilherme Vanz / Marcos Paulo de Souza");
-
-	glutDisplayFunc(screen_display);
-
+	inicializacao();
+	//glutReshapeFunc(reshape);
+	//glutDisplayFunc(screen_display);
+/*
+	glNewList(SPHERE, GL_COMPILE);
+	sphere = gluNewQuadric();
+	glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, sphere_mat);
+	gluSphere(sphere, 20.f, 20, 20);
+	gluDeleteQuadric(sphere);
+	glEndList();
+*/
         glutMainLoop();
 }

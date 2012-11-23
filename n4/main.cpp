@@ -10,6 +10,7 @@
  * */
 
 #include <GL/glut.h>
+#include <stdio>
 
 /* Tamanho da tela */
 #define X_MAX 500
@@ -41,6 +42,7 @@ void teclado(int tecla)
 	glutPostRedisplay();
 }
 
+GLMmodel* pmodel = NULL;
 void desenha()
 {
 	glMatrixMode (GL_PROJECTION);
@@ -50,6 +52,22 @@ void desenha()
 	glLoadIdentity ();
 	glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	
+       	pmodel = glmReadOBJ("objs/terra.obj");
+        if (!pmodel) exit(0);
+       	glmUnitize(pmodel);
+        glmFacetNormals(pmodel);
+        glmVertexNormals(pmodel, 90.0);
+    
+	glmDraw(pmodel, GLM_SMOOTH | GLM_MATERIAL);
+	glutSwapBuffers();
+}
+
+void
+drawaxes(void)
+{
+    glColor3ub(255, 0, 0);
+    glBegin(GL_LINE_STRIP);
+    glVertex3f(0.0, 0.0, 0.0);
 	glutSwapBuffers();
 }
 
@@ -91,4 +109,69 @@ int main (int argc, const char * argv[])
 	glutMainLoop();
  
 	return 0;
+}
+
+
+GLMmodel* glmReadOBJ(char* filename)
+{
+    GLMmodel* model;
+    FILE* file;
+    
+    /* open the file */
+    file = fopen(filename, "r");
+    if (!file) {
+        fprintf(stderr, "glmReadOBJ() failed: can't open data file \"%s\".\n",
+            filename);
+        exit(1);
+    }
+    
+    /* allocate a new model */
+    model = (GLMmodel*)malloc(sizeof(GLMmodel));
+    model->pathname    = strdup(filename);
+    model->mtllibname    = NULL;
+    model->numvertices   = 0;
+    model->vertices    = NULL;
+    model->numnormals    = 0;
+    model->normals     = NULL;
+    model->numtexcoords  = 0;
+    model->texcoords       = NULL;
+    model->numfacetnorms = 0;
+    model->facetnorms    = NULL;
+    model->numtriangles  = 0;
+    model->triangles       = NULL;
+    model->nummaterials  = 0;
+    model->materials       = NULL;
+    model->numgroups       = 0;
+    model->groups      = NULL;
+    model->position[0]   = 0.0;
+    model->position[1]   = 0.0;
+    model->position[2]   = 0.0;
+    
+    /* make a first pass through the file to get a count of the number
+    of vertices, normals, texcoords & triangles */
+    glmFirstPass(model, file);
+    
+    /* allocate memory */
+    model->vertices = (GLfloat*)malloc(sizeof(GLfloat) *
+        3 * (model->numvertices + 1));
+    model->triangles = (GLMtriangle*)malloc(sizeof(GLMtriangle) *
+        model->numtriangles);
+    if (model->numnormals) {
+        model->normals = (GLfloat*)malloc(sizeof(GLfloat) *
+            3 * (model->numnormals + 1));
+    }
+    if (model->numtexcoords) {
+        model->texcoords = (GLfloat*)malloc(sizeof(GLfloat) *
+            2 * (model->numtexcoords + 1));
+    }
+    
+    /* rewind to beginning of file and read in the data this pass */
+    rewind(file);
+    
+    glmSecondPass(model, file);
+    
+    /* close the file */
+    fclose(file);
+    
+    return model;
 }
