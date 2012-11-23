@@ -1,15 +1,16 @@
 CC = g++
 ARGS = -Wall -lglut -lGLU -lGL -lm
-FILES = main.cpp glm.c
+FILES = tentativa.cpp glm.cpp
 
 all:
 	$(CC) $(FILES) $(ARGS) -o n4 
 
 clean:
-	rm n4
+	rm n4 t terra
 
 debug:
 	$(CC) $(FILES) $(ARGS) -o n4 -g
 
-terra:
-	$(CC) terra.cpp glm.c $(ARGS) -o terra
+t:
+#	rm t
+	$(CC) tentativa.cpp glm.cpp $(ARGS) -o t
