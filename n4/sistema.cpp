@@ -24,6 +24,8 @@ typedef struct _cell {
     char* format;
 } cell;
 
+double rotate_y=0; 
+double rotate_x=0;
 
 cell lookat[9] = {
     { 1, 180, 120, -5.0, 5.0, 0.0, 0.1,
@@ -109,7 +111,7 @@ void redisplay_all(void);
 GLdouble projection[16], modelview[16], inverse[16];
 GLuint window;
 GLuint sub_width = 256, sub_height = 256;
-
+/*
 void
 drawmodel(void)
 {
@@ -123,7 +125,7 @@ drawmodel(void)
     
     glmDraw(pmodel, GLM_SMOOTH | GLM_MATERIAL);
 }
-
+*/
 void another_keyboard(unsigned char key, int x, int y)
 {
 	printf("another\n");
@@ -172,47 +174,6 @@ main_keyboard(int key, int x, int y)
 	break;
     case 103: //baixo
 	break;
-    case 'l':
-    case 'L':
-        lookat[0].value = lookat_lateral[0].value;
-	lookat[1].value = lookat_lateral[1].value;
-	lookat[2].value = lookat_lateral[2].value;
-       	lookat[3].value = lookat_lateral[3].value;
-	lookat[4].value = lookat_lateral[4].value;
-	lookat[5].value = lookat_lateral[5].value;
-        lookat[6].value = lookat_lateral[6].value;
-	lookat[7].value = lookat_lateral[7].value;
-	lookat[8].value = lookat_lateral[8].value;
-	break;
-    case 'c':
-    case 'C':
-        lookat[0].value = lookat_cima[0].value;
-        lookat[1].value = lookat_cima[1].value;
-        lookat[2].value = lookat_cima[2].value;
-        lookat[3].value = lookat_cima[3].value;
-        lookat[4].value = lookat_cima[4].value;
-        lookat[5].value = lookat_cima[5].value;
-        lookat[6].value = lookat_cima[6].value;
-        lookat[7].value = lookat_cima[7].value;
-        lookat[8].value = lookat_cima[8].value;
-	break;
-/*
-    case 'r':
-        perspective[0].value = 60.0;
-        perspective[1].value = 1.0;
-        perspective[2].value = 1.0;
-        perspective[3].value = 10.0;
-        lookat[0].value = 0.0;
-        lookat[1].value = 0.0;
-        lookat[2].value = 2.0;
-        lookat[3].value = 0.0;
-        lookat[4].value = 0.0;
-        lookat[5].value = 0.0;
-        lookat[6].value = 0.0;
-        lookat[7].value = 1.0;
-        lookat[8].value = 0.0;
-        break;
-*/
     case 27:
         exit(0);
     }
@@ -242,22 +203,122 @@ screen_reshape(int width, int height)
 
 int old_y;
 
-void
-redisplay_all(void)
+void draw_fucking_cube()
 {
-    glutSetWindow(window);
-    screen_reshape(sub_width, sub_height);
-    glutPostRedisplay();
+  //  Clear screen and Z-buffer
+  glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
+ 
+  // Reset transformations
+  glLoadIdentity();
+ 
+  // Other Transformations
+  // glTranslatef( 0.1, 0.0, 0.0 );      // Not included
+  // glRotatef( 180, 0.0, 1.0, 0.0 );    // Not included
+ 
+  // Rotate when user changes rotate_x and rotate_y
+  glRotatef( rotate_x, 1.0, 0.0, 0.0 );
+  glRotatef( rotate_y, 0.0, 1.0, 0.0 );
+ 
+  // Other Transformations
+  // glScalef( 2.0, 2.0, 0.0 );          // Not included
+ 
+  //Multi-colored side - FRONT
+  glBegin(GL_POLYGON);
+ 
+  glColor3f( 1.0, 0.0, 0.0 );     glVertex3f(  0.5, -0.5, -0.5 );      // P1 is red
+  glColor3f( 0.0, 1.0, 0.0 );     glVertex3f(  0.5,  0.5, -0.5 );      // P2 is green
+  glColor3f( 0.0, 0.0, 1.0 );     glVertex3f( -0.5,  0.5, -0.5 );      // P3 is blue
+  glColor3f( 1.0, 0.0, 1.0 );     glVertex3f( -0.5, -0.5, -0.5 );      // P4 is purple
+ 
+  glEnd();
+ 
+  // White side - BACK
+  glBegin(GL_POLYGON);
+  glColor3f(   1.0,  1.0, 1.0 );
+  glVertex3f(  0.5, -0.5, 0.5 );
+  glVertex3f(  0.5,  0.5, 0.5 );
+  glVertex3f( -0.5,  0.5, 0.5 );
+  glVertex3f( -0.5, -0.5, 0.5 );
+  glEnd();
+ 
+  // Purple side - RIGHT
+  glBegin(GL_POLYGON);
+  glColor3f(  1.0,  0.0,  1.0 );
+  glVertex3f( 0.5, -0.5, -0.5 );
+  glVertex3f( 0.5,  0.5, -0.5 );
+  glVertex3f( 0.5,  0.5,  0.5 );
+  glVertex3f( 0.5, -0.5,  0.5 );
+  glEnd();
+ 
+  // Green side - LEFT
+  glBegin(GL_POLYGON);
+  glColor3f(   0.0,  1.0,  0.0 );
+  glVertex3f( -0.5, -0.5,  0.5 );
+  glVertex3f( -0.5,  0.5,  0.5 );
+  glVertex3f( -0.5,  0.5, -0.5 );
+  glVertex3f( -0.5, -0.5, -0.5 );
+  glEnd();
+ 
+  // Blue side - TOP
+  glBegin(GL_POLYGON);
+  glColor3f(   0.0,  0.0,  1.0 );
+  glVertex3f(  0.5,  0.5,  0.5 );
+  glVertex3f(  0.5,  0.5, -0.5 );
+  glVertex3f( -0.5,  0.5, -0.5 );
+  glVertex3f( -0.5,  0.5,  0.5 );
+  glEnd();
+ 
+  // Red side - BOTTOM
+  glBegin(GL_POLYGON);
+  glColor3f(   1.0,  0.0,  0.0 );
+  glVertex3f(  0.5, -0.5, -0.5 );
+  glVertex3f(  0.5, -0.5,  0.5 );
+  glVertex3f( -0.5, -0.5,  0.5 );
+  glVertex3f( -0.5, -0.5, -0.5 );
+  glEnd();
+ 
+  glFlush();
+  glutSwapBuffers();
 }
 
  void
 screen_display(void)
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    drawmodel();
+//    drawmodel();
+    draw_fucking_cube();
     glutSwapBuffers();
 }
 
+void
+redisplay_all(void)
+{
+    glutSetWindow(window);
+    //screen_reshape(sub_width, sub_height);
+	draw_fucking_cube();
+    glutPostRedisplay();
+}
+
+void specialKeys( int key, int x, int y ) {
+ 
+  //  Right arrow - increase rotation by 5 degree
+  if (key == GLUT_KEY_RIGHT)
+    rotate_y += 5;
+ 
+  //  Left arrow - decrease rotation by 5 degree
+  else if (key == GLUT_KEY_LEFT)
+    rotate_y -= 5;
+ 
+  else if (key == GLUT_KEY_UP)
+    rotate_x += 5;
+ 
+  else if (key == GLUT_KEY_DOWN)
+    rotate_x -= 5;
+ 
+  //  Request display update
+  glutPostRedisplay();
+ 
+}
 
 int
 main(int argc, char** argv)
@@ -268,10 +329,12 @@ main(int argc, char** argv)
     glutInit(&argc, argv);
     
     window = glutCreateWindow("Projection");
-    glutReshapeFunc(screen_reshape);
+//    glutReshapeFunc(screen_reshape);
+//    glutReshapeFunc(redisplay_all);
     glutDisplayFunc(screen_display);
     glutKeyboardFunc(another_keyboard);
-    glutSpecialFunc(main_keyboard);
+//    glutSpecialFunc(main_keyboard);
+    glutSpecialFunc(specialKeys);
 
     redisplay_all();
     
