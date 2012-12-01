@@ -102,89 +102,13 @@ cell perspective[4] = {
 const int PERSPECTIVE = 0;
 int  mode = 0; //perspective
 
-GLboolean world_draw = GL_TRUE;
 GLMmodel* pmodel = NULL;
 GLint selection = 0;
 
 void redisplay_all(void);
 GLdouble projection[16], modelview[16], inverse[16];
-GLuint window, world, screen, command;
+GLuint window;
 GLuint sub_width = 256, sub_height = 256;
-
-
-GLvoid *font_style = GLUT_BITMAP_TIMES_ROMAN_10;
-
-void
-setfont(char* name, int size)
-{
-    font_style = GLUT_BITMAP_HELVETICA_10;
-    if (strcmp(name, "helvetica") == 0) {
-        if (size == 12) 
-            font_style = GLUT_BITMAP_HELVETICA_12;
-        else if (size == 18)
-            font_style = GLUT_BITMAP_HELVETICA_18;
-    } else if (strcmp(name, "times roman") == 0) {
-        font_style = GLUT_BITMAP_TIMES_ROMAN_10;
-        if (size == 24)
-            font_style = GLUT_BITMAP_TIMES_ROMAN_24;
-    } else if (strcmp(name, "8x13") == 0) {
-        font_style = GLUT_BITMAP_8_BY_13;
-    } else if (strcmp(name, "9x15") == 0) {
-        font_style = GLUT_BITMAP_9_BY_15;
-    }
-}
-
-void 
-drawstr(GLuint x, GLuint y, char* format, ...)
-{
-    va_list args;
-    char buffer[255], *s;
-    
-    va_start(args, format);
-    vsprintf(buffer, format, args);
-    va_end(args);
-    
-    glRasterPos2i(x, y);
-    for (s = buffer; *s; s++)
-        glutBitmapCharacter(font_style, *s);
-}
-
-void
-cell_draw(cell* cell)
-{
-    glColor3ub(0, 255, 128);
-    if (selection == cell->id) {
-        glColor3ub(255, 255, 0);
-        drawstr(10, 240, cell->info);
-        glColor3ub(255, 0, 0);
-    }
-    
-    drawstr(cell->x, cell->y, cell->format, cell->value);
-}
-
-int
-cell_hit(cell* cell, int x, int y)
-{
-    if (x > cell->x && x < cell->x + 60 &&
-        y > cell->y-30 && y < cell->y+10)
-        return cell->id;
-    return 0;
-}
-
-void
-cell_update(cell* cell, int update)
-{
-    if (selection != cell->id)
-        return;
-    
-    cell->value += update * cell->step;
-    
-    if (cell->value < cell->min)
-        cell->value = cell->min;
-    else if (cell->value > cell->max) 
-        cell->value = cell->max;
-    
-}
 
 void
 drawmodel(void)
@@ -198,15 +122,6 @@ drawmodel(void)
     }
     
     glmDraw(pmodel, GLM_SMOOTH | GLM_MATERIAL);
-}
-
-void
-identity(GLdouble m[16])
-{
-    m[0+4*0] = 1; m[0+4*1] = 0; m[0+4*2] = 0; m[0+4*3] = 0;
-    m[1+4*0] = 0; m[1+4*1] = 1; m[1+4*2] = 0; m[1+4*3] = 0;
-    m[2+4*0] = 0; m[2+4*1] = 0; m[2+4*2] = 1; m[2+4*3] = 0;
-    m[3+4*0] = 0; m[3+4*1] = 0; m[3+4*2] = 0; m[3+4*3] = 1;
 }
 
 void another_keyboard(unsigned char key, int x, int y)
