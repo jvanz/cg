@@ -1,12 +1,3 @@
-/*
-    projection.c
-    Nate Robins, 1997
-
-    Tool for teaching about OpenGL projections.
-    
-*/
-
-
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -30,9 +21,9 @@ double rotate_x=0;
 cell lookat[9] = {
     { 1, 180, 120, -5.0, 5.0, 0.0, 0.1,
         "Specifies the X position of the eye point.", "%.2f" },
-    { 2, 240, 120, -5.0, 5.0, 0.0, 0.1,
+    { 2, 240, 120, -5.0, 5.0, 5.0, 0.1,
     "Specifies the Y position of the eye point.", "%.2f" },
-    { 3, 300, 120, -5.0, 5.0, 2.0, 0.1,
+    { 3, 300, 120, -5.0, 5.0, 1.0, 0.1,
     "Specifies the Z position of the eye point.", "%.2f" },
     { 4, 180, 160, -5.0, 5.0, 0.0, 0.1,
     "Specifies the X position of the reference point.", "%.2f" },
@@ -227,13 +218,13 @@ void cell_vector(float* dst, cell* cell, int num)
 
 void screen_display(void)
 {
-    GLfloat pos[4] = {10.0,10.0,10.0,10.0};
+    GLfloat pos[4] = {0.0, 3.0, 0.0, 1};
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glLightfv(GL_LIGHT0, GL_POSITION,pos);
     glEnable(GL_LIGHTING);
     
 	glPushMatrix();
-        glTranslatef(0, 0, -2);
+        glTranslatef(0, 0, 0);
 
         glBegin(GL_QUADS);
 
