@@ -133,7 +133,7 @@ GLint selection = 0;
 void redisplay_all(void);
 GLdouble projection[16], modelview[16], inverse[16];
 GLuint window;
-GLuint sub_width = 256, sub_height = 256;
+GLuint sub_width = 512, sub_height = 512;
 unsigned char* image = NULL;
 int iheight, iwidth;
 GLenum minfilter = GL_NEAREST;
@@ -414,7 +414,7 @@ int
 main(int argc, char** argv)
 {
     glutInitDisplayMode(GLUT_RGB | GLUT_DEPTH | GLUT_DOUBLE);
-    glutInitWindowSize(512, 512);
+    glutInitWindowSize(sub_width, sub_height);
     glutInitWindowPosition(50, 50);
     glutInit(&argc, argv);
     
