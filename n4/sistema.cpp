@@ -252,11 +252,50 @@ float cubo1[24][3] = {{-1.0f, -1.0f, -1.0f},
 		      {1.0f, 1.0f,- 1.0f}};
 
 
+float cubo2[24][3] = {{1.0f, 1.0f, 1.0f},
+		      {-1.0f, 1.0f, 1.0f},
+		      {-1.0f,- 1.0f, 1.0f},
+		      {1.0f,- 1.0f, 1.0f},
+
+		      {1.0f, 1.0f, 1.0f},
+		      {1.0f, 1.0f, -1.0f},
+		      {1.0f, -1.0f, 1.0f},
+		      {1.0f, -1.0f, -1.0f},
+		     
+	              {1.0f, 1.0f, 1.0f},
+	              {1.0f, 1.0f, -1.0f},
+		      {-1.0f, 1.0f, -1.0f},
+		      {-1.0f, 1.0f, 1.0f},
+
+		      {1.0f, 1.0f, -1.0f},
+		      {-1.0f, 1.0f, -1.0f},
+		      {-1.0f, -1.0f, -1.0f},
+		      {1.0f, -1.0f, -1.0f},
+
+		      {1.0f, 1.0f, -1.0f},
+		      {-1.0f, 1.0f, -1.0f},
+		      {-1.0f, -1.0f, -1.0f},
+		      {1.0f, -1.0f, -1.0f},
+
+		      {1.0f, -1.0f, 1.0f},
+		      {1.0f, -1.0f, -1.0f},
+		      {-1.0f, -1.0f, -1.0f},
+		      {-1.0f, -1.0f,1.0f}};
+
 void desenhaCubo(int idCubo)
 {
+//TODO - Melhorar esse BS
 	int vertice;
-	for(vertice = 0; vertice < 24; vertice++){
-		        glVertex3f(cubo1[vertice][0], cubo1[vertice][1], cubo1[vertice][2]);
+	if(idCubo == 1){
+		//cubo 1
+		for(vertice = 0; vertice < 24; vertice++){
+			        glVertex3f(cubo1[vertice][0], cubo1[vertice][1], cubo1[vertice][2]);
+		}
+	}else{
+		//cubo 2
+		for(vertice = 0; vertice < 24; vertice++){
+			        glVertex3f(cubo2[vertice][0], cubo2[vertice][1], cubo2[vertice][2]);
+		}
 	}
 /*
         glVertex3f(-1.0f,-1.0f ,-1.0f);
@@ -299,12 +338,12 @@ void screen_display(void)
     glEnable(GL_LIGHTING);
     
 	glPushMatrix();
-        glTranslatef(0, 0, 0);
+        glTranslatef(0, 0, 0.5);
 
         glBegin(GL_QUADS);
-
 	glColor3f(0.0f,0.0f,1.0f);
 	desenhaCubo(1);
+	desenhaCubo(2);
         glEnd();
 
         glPopMatrix();
