@@ -92,28 +92,6 @@ cell perspective[4] = {
     "Specifies distance from viewer to far clipping plane.", "%.1f" },
 };
 
-cell bcolor[4] = {
-     { 39, 240, 30, 0.0, 1.0, 1.0, 0.01,
-         "Specifies red component of texture border color.", "%.2f" },
-     { 40, 300, 30, 0.0, 1.0, 0.0, 0.01,
-     "Specifies green component of texture border color.", "%.2f" },
-     { 41, 360, 30, 0.0, 1.0, 0.0, 0.01,
-     "Specifies blue component of texture border color.", "%.2f" },
-     { 42, 420, 30, 0.0, 1.0, 1.0, 0.01,
-     "Specifies alpha component of texture border color.", "%.2f" },
- };
- 
- cell ecolor[4] = {
-     { 35, 240, 60, 0.0, 1.0, 0.0, 0.01,
-         "Specifies red component of texture environment color.", "%.2f" },
-     { 36, 300, 60, 0.0, 1.0, 1.0, 0.01,
-     "Specifies green component of texture environment color.", "%.2f" },
-     { 37, 360, 60, 0.0, 1.0, 0.0, 0.01,
-     "Specifies blue component of texture environment color.", "%.2f" },
-     { 38, 420, 60, 0.0, 1.0, 1.0, 0.01,
-     "Specifies alpha component of texture environment color.", "%.2f" },
-};
-
 cell light[4] = { /*Array não usado. Não remover por enquanto*/
     { 10, 180, 40, -5.0, 5.0, 1.5, 0.1,
         "Specifies X coordinate of light vector.", "%.2f" },
@@ -129,13 +107,8 @@ cell light[4] = { /*Array não usado. Não remover por enquanto*/
 //float cubos[2][] = 
 
 
-const int PERSPECTIVE = 0;
-int  mode = 0; //perspective
-
-GLint selection = 0;
-
 void redisplay_all(void);
-GLdouble projection[16], modelview[16], inverse[16];
+GLdouble projection[16], modelview[16];
 GLuint window;
 GLuint sub_width = 512, sub_height = 512;
 
@@ -213,13 +186,6 @@ screen_reshape(int width, int height)
     glEnable(GL_LIGHTING);
     glEnable(GL_LIGHT0);
 }
-
-void cell_vector(float* dst, cell* cell, int num)
-{
-     while (--num >= 0)
-         dst[num] = cell[num].value;
-}
-
 
 float cubo1[24][3] = {{-1.0f, -1.0f, -1.0f},
 		      {1.0f, -1.0f, -1.0f},
