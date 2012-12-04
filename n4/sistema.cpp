@@ -125,6 +125,10 @@ cell light[4] = { /*Array não usado. Não remover por enquanto*/
     "Specifies directional (0) or positional (1) light.", "%.2f" }
 };
 
+
+//float cubos[2][] = 
+
+
 const int PERSPECTIVE = 0;
 int  mode = 0; //perspective
 
@@ -216,20 +220,45 @@ void cell_vector(float* dst, cell* cell, int num)
          dst[num] = cell[num].value;
 }
 
-void screen_display(void)
+
+float cubo1[24][3] = {{-1.0f, -1.0f, -1.0f},
+		      {1.0f, -1.0f, -1.0f},
+		      {1.0f, 1.0f, -1.0f},
+		      {-1.0f, 1.0f, -1.0f},
+
+		      {-1.0f, -1.0f, -1.0f},
+		      {-1.0f, -1.0f, 1.0f},
+		      {-1.0f, 1.0f, -1.0f},
+		      {-1.0f, 1.0f, 1.0f},
+		     
+	              {-1.0f, -1.0f, -1.0f},
+	              {-1.0f, -1.0f, 1.0f},
+		      {1.0f, -1.0f, 1.0f},
+		      {1.0f, -1.0f, -1.0f},
+
+		      {-1.0f, -1.0f, 1.0f},
+		      {1.0f, -1.0f, 1.0f},
+		      {1.0f, 1.0f, 1.0f},
+		      {-1.0f, 1.0f, 1.0f},
+
+		      {-1.0f, -1.0f, 1.0f},
+		      {1.0f, -1.0f, 1.0f},
+		      {1.0f, 1.0f, 1.0f},
+		      {-1.0f, 1.0f, 1.0f},
+
+		      {-1.0f, 1.0f, -1.0f},
+		      {-1.0f, 1.0f, 1.0f},
+		      {1.0f, 1.0f, 1.0f},
+		      {1.0f, 1.0f,- 1.0f}};
+
+
+void desenhaCubo(int idCubo)
 {
-    GLfloat pos[4] = {0.0, 3.0, 0.0, 1};
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    glLightfv(GL_LIGHT0, GL_POSITION,pos);
-    glEnable(GL_LIGHTING);
-    
-	glPushMatrix();
-        glTranslatef(0, 0, 0);
-
-        glBegin(GL_QUADS);
-
-	glColor3f(0.0f,0.0f,1.0f);
-
+	int vertice;
+	for(vertice = 0; vertice < 24; vertice++){
+		        glVertex3f(cubo1[vertice][0], cubo1[vertice][1], cubo1[vertice][2]);
+	}
+/*
         glVertex3f(-1.0f,-1.0f ,-1.0f);
         glVertex3f(1.0f, -1.0f, -1.0f);
         glVertex3f(1.0f, 1.0f, -1.0f);
@@ -259,6 +288,23 @@ void screen_display(void)
         glVertex3f(-1.0f, 1.0f, 1.0f);
         glVertex3f(1.0f, 1.0f, 1.0f);
         glVertex3f(1.0f, 1.0f, -1.0f);
+*/
+}
+
+void screen_display(void)
+{
+    GLfloat pos[4] = {0.0, 3.0, 0.0, 1};
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glLightfv(GL_LIGHT0, GL_POSITION,pos);
+    glEnable(GL_LIGHTING);
+    
+	glPushMatrix();
+        glTranslatef(0, 0, 0);
+
+        glBegin(GL_QUADS);
+
+	glColor3f(0.0f,0.0f,1.0f);
+	desenhaCubo(1);
         glEnd();
 
         glPopMatrix();
@@ -266,6 +312,7 @@ void screen_display(void)
     glDisable(GL_LIGHTING);
     glutSwapBuffers();
 }
+
 
 
 void redisplay_all(void)
