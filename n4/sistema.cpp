@@ -123,6 +123,16 @@ cell bcolor[4] = {
      "Specifies alpha component of texture environment color.", "%.2f" },
 };
 
+cell light[4] = { /*Array não usado. Não remover por enquanto*/
+    { 10, 180, 40, -5.0, 5.0, 1.5, 0.1,
+        "Specifies X coordinate of light vector.", "%.2f" },
+    { 11, 240, 40, -5.0, 5.0, 1.0, 0.1,
+    "Specifies Y coordinate of light vector.", "%.2f" },
+    { 12, 300, 40, -5.0, 5.0, 1.0, 0.1,
+    "Specifies Z coordinate of light vector.", "%.2f" },
+    { 13, 360, 40, 0.0, 1.0, 0.0, 1.0,
+    "Specifies directional (0) or positional (1) light.", "%.2f" }
+};
 
 const int PERSPECTIVE = 0;
 int  mode = 0; //perspective
@@ -217,8 +227,12 @@ void cell_vector(float* dst, cell* cell, int num)
 
 void screen_display(void)
 {
+    GLfloat pos[4] = {10.0,10.0,10.0,10.0};
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glLightfv(GL_LIGHT0, GL_POSITION,pos);
+    glEnable(GL_LIGHTING);
     glutSolidCube(1.0);
+    glDisable(GL_LIGHTING);
     glutSwapBuffers();
 }
 
