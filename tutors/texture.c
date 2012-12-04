@@ -1141,7 +1141,7 @@ command_menu(int value)
 int
 main(int argc, char** argv)
 {
-    image = glmReadPPM("data/fishermen.ppm", &iwidth, &iheight);
+    image = glmReadPPM("data/terra.ppm", &iwidth, &iheight);
     if (!image)
         exit(0);
     
