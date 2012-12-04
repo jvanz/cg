@@ -101,6 +101,29 @@ cell perspective[4] = {
     "Specifies distance from viewer to far clipping plane.", "%.1f" },
 };
 
+cell bcolor[4] = {
+     { 39, 240, 30, 0.0, 1.0, 1.0, 0.01,
+         "Specifies red component of texture border color.", "%.2f" },
+     { 40, 300, 30, 0.0, 1.0, 0.0, 0.01,
+     "Specifies green component of texture border color.", "%.2f" },
+     { 41, 360, 30, 0.0, 1.0, 0.0, 0.01,
+     "Specifies blue component of texture border color.", "%.2f" },
+     { 42, 420, 30, 0.0, 1.0, 1.0, 0.01,
+     "Specifies alpha component of texture border color.", "%.2f" },
+ };
+ 
+ cell ecolor[4] = {
+     { 35, 240, 60, 0.0, 1.0, 0.0, 0.01,
+         "Specifies red component of texture environment color.", "%.2f" },
+     { 36, 300, 60, 0.0, 1.0, 1.0, 0.01,
+     "Specifies green component of texture environment color.", "%.2f" },
+     { 37, 360, 60, 0.0, 1.0, 0.0, 0.01,
+     "Specifies blue component of texture environment color.", "%.2f" },
+     { 38, 420, 60, 0.0, 1.0, 1.0, 0.01,
+     "Specifies alpha component of texture environment color.", "%.2f" },
+};
+
+
 const int PERSPECTIVE = 0;
 int  mode = 0; //perspective
 
@@ -111,12 +134,20 @@ void redisplay_all(void);
 GLdouble projection[16], modelview[16], inverse[16];
 GLuint window;
 GLuint sub_width = 256, sub_height = 256;
-/*
-void
-drawmodel(void)
+unsigned char* image = NULL;
+int iheight, iwidth;
+GLenum minfilter = GL_NEAREST;
+GLenum magfilter = GL_NEAREST;
+GLenum env = GL_MODULATE;
+GLenum wraps = GL_REPEAT;
+GLenum wrapt = GL_REPEAT;
+
+
+
+void drawmodel(void)
 {
     if (!pmodel) {
-        pmodel = glmReadOBJ("al.obj");
+        pmodel = glmReadOBJ("objs/al.obj");
         if (!pmodel) exit(0);
         glmUnitize(pmodel);
         glmFacetNormals(pmodel);
@@ -125,7 +156,7 @@ drawmodel(void)
     
     glmDraw(pmodel, GLM_SMOOTH | GLM_MATERIAL);
 }
-*/
+
 void another_keyboard(unsigned char key, int x, int y)
 {
 	printf("another\n");
@@ -281,21 +312,53 @@ void draw_fucking_cube()
   glutSwapBuffers();
 }
 
- void
-screen_display(void)
+void cell_vector(float* dst, cell* cell, int num)
+{
+     while (--num >= 0)
+         dst[num] = cell[num].value;
+}
+
+void texenv(void)
+{
+     GLfloat env_color[4], border_color[4];
+ 
+     cell_vector(env_color, ecolor, 4);
+     cell_vector(border_color, bcolor, 4);
+ 
+     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, minfilter);
+     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, magfilter);
+     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, wraps);
+     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, wrapt);
+     glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, env);
+     glTexEnvfv(GL_TEXTURE_ENV, GL_TEXTURE_ENV_COLOR, env_color);
+     glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, border_color);
+}
+void texture(void)
+{
+     texenv();
+     gluBuild2DMipmaps(GL_TEXTURE_2D, 3, iwidth, iheight, GL_RGB, GL_UNSIGNED_BYTE, image);
+}
+
+
+void screen_display(void)
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 //    drawmodel();
-    draw_fucking_cube();
+//    draw_fucking_cube();
+    if (!image){
+       image = glmReadPPM("objs/terra.ppm", &iwidth, &iheight);
+    }
+    texture();
+    glutSolidSphere(1.0, 10, 10);
     glutSwapBuffers();
 }
 
-void
-redisplay_all(void)
+
+void redisplay_all(void)
 {
     glutSetWindow(window);
-    //screen_reshape(sub_width, sub_height);
-	draw_fucking_cube();
+    screen_reshape(sub_width, sub_height);
+//	draw_fucking_cube();
     glutPostRedisplay();
 }
 
@@ -320,6 +383,33 @@ void specialKeys( int key, int x, int y ) {
  
 }
 
+
+void drawSphere(double r, int lats, int longs) {
+      int i, j;
+      for(i = 0; i <= lats; i++) {
+          double lat0 = M_PI * (-0.5 + (double) (i - 1) / lats);
+          double z0  = sin(lat0);
+          double zr0 =  cos(lat0);
+    
+          double lat1 = M_PI * (-0.5 + (double) i / lats);
+          double z1 = sin(lat1);
+          double zr1 = cos(lat1);
+    
+          glBegin(GL_QUAD_STRIP);
+          for(j = 0; j <= longs; j++) {
+              double lng = 2 * M_PI * (double) (j - 1) / longs;
+              double x = cos(lng);
+              double y = sin(lng);
+    
+              glNormal3f(x * zr0, y * zr0, z0);
+              glVertex3f(x * zr0, y * zr0, z0);
+              glNormal3f(x * zr1, y * zr1, z1);
+              glVertex3f(x * zr1, y * zr1, z1);
+          }
+         glEnd();
+      }
+}
+
 int
 main(int argc, char** argv)
 {
@@ -329,12 +419,12 @@ main(int argc, char** argv)
     glutInit(&argc, argv);
     
     window = glutCreateWindow("Projection");
-//    glutReshapeFunc(screen_reshape);
+    glutReshapeFunc(screen_reshape);
 //    glutReshapeFunc(redisplay_all);
     glutDisplayFunc(screen_display);
-    glutKeyboardFunc(another_keyboard);
-//    glutSpecialFunc(main_keyboard);
-    glutSpecialFunc(specialKeys);
+//    glutKeyboardFunc(another_keyboard);
+    glutSpecialFunc(main_keyboard);
+//    glutSpecialFunc(specialKeys);
 
     redisplay_all();
     

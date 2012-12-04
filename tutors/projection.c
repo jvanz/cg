@@ -187,7 +187,7 @@ void
 drawmodel(void)
 {
     if (!pmodel) {
-        pmodel = glmReadOBJ("data/terra.obj");
+        pmodel = glmReadOBJ("data/al.obj");
         if (!pmodel) exit(0);
         glmUnitize(pmodel);
         glmFacetNormals(pmodel);
