@@ -561,7 +561,13 @@ void
 screen_display(void)
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    drawmodel();
+
+	glutSolidCube(0.5);
+
+	glTranslatef(0, 1, 0.5);
+
+	glutSolidCube(0.5);
+
     glutSwapBuffers();
 }
 

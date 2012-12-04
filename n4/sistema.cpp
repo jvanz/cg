@@ -82,7 +82,7 @@ cell lookat_lateral[9] = {
 };
 
 cell perspective[4] = {
-    { 10, 180, 80, 1.0, 179.0, 60.0, 1.0,
+    { 10, 180, 80, 1.0, 179.0, 97.0, 1.0,
         "Specifies field of view angle (in degrees) in y direction.", "%.1f" },
     { 11, 512, 512, -3.0, 3.0, 1.0, 0.01,
     "Specifies field of view in x direction (width/height).", "%.2f" },
@@ -304,12 +304,17 @@ void screen_display(void)
     glEnable(GL_LIGHTING);
     
 	glPushMatrix();
-        glTranslatef(0, 0, 0.5);
+        glTranslatef(0, 0, 0);
 
         glBegin(GL_QUADS);
+
 	glColor3f(0.0f,0.0f,1.0f);
-	desenhaCubo(1);
-	desenhaCubo(2);
+	glutSolidCube(0.5);
+	//desenhaCubo(1);
+
+        glTranslatef(1, 1.5, 0.5);
+	glutSolidCube(0.5);
+	//desenhaCubo(2);
         glEnd();
 
         glPopMatrix();
