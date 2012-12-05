@@ -17,13 +17,10 @@ typedef struct _cell {
     char* format;
 } cell;
 
-double rotate_y=0; 
-double rotate_x=0;
-
 cell lookat[9] = {
     { 1, 180, 120, -5.0, 5.0, 5.0, 0.1,
         "Specifies the X position of the eye point.", "%.2f" },
-    { 2, 240, 120, -5.0, 5.0, 5.0, 0.1,
+    { 2, 240, 120, -5.0, 5.0, 7.0, 0.1,
     "Specifies the Y position of the eye point.", "%.2f" },
     { 3, 300, 120, -5.0, 5.0, 2.0, 0.1,
     "Specifies the Z position of the eye point.", "%.2f" },
@@ -44,7 +41,7 @@ cell lookat[9] = {
 cell lookat_cima[9] = {
     { 1, 180, 120, -5.0, 5.0, 0.0, 0.1,
         "Specifies the X position of the eye point.", "%.2f" },
-    { 2, 240, 120, -5.0, 5.0, 5.0, 0.1,
+    { 2, 240, 120, -5.0, 5.0, 10.0, 0.1,
     "Specifies the Y position of the eye point.", "%.2f" },
     { 3, 300, 120, -5.0, 5.0, 1.0, 0.1,
     "Specifies the Z position of the eye point.", "%.2f" },
@@ -90,12 +87,13 @@ cell perspective[4] = {
     "Specifies field of view in x direction (width/height).", "%.2f" },
     { 12, 512, 512, 0.1, 10.0, 1.0, 0.05,
     "Specifies distance from viewer to near clipping plane.", "%.1f" },
-    { 13, 512, 512, 0.1, 10.0, 10.0, 0.05,
+    { 13, 512, 512, 0.1, 10.0, 20.0, 0.05,
     "Specifies distance from viewer to far clipping plane.", "%.1f" },
 };
 
-float x = 0, y = 0, z = 0, raio = 3;
-float g = 360;
+float x  = 0, y  = 0, z  = 0, raio  = 4, g  = 360, a  = 360;
+float x2 = 0, y2 = 0, z2 = 0, raio2 = 3, g2 = 0, a2   = 360;
+float x3 = 0, y3 = 0, z3 = 0, raio3 = 2, g3 = 360, a3 = 360;
 
 void redisplay_all(void);
 void screen_display(void);
@@ -181,23 +179,6 @@ screen_reshape(int width, int height)
 	printf("reshape..\n");
 }
 
-
-void desenhaCubo(int idCubo)
-{
-	int vertice;
-	if(idCubo == 1){
-		//cubo 1
-		for(vertice = 0; vertice < 24; vertice++){
-			        glVertex3f(cubo1[vertice][0], cubo1[vertice][1], cubo1[vertice][2]);
-		}
-	}else{
-		//cubo 2
-		for(vertice = 0; vertice < 24; vertice++){
-			        glVertex3f(cubo2[vertice][0], cubo2[vertice][1], cubo2[vertice][2]);
-		}
-	}
-}
-
 void screen_display(void)
 {
     GLfloat pos[4] = {0.0, 3.0, 0.0, 1};
@@ -205,22 +186,35 @@ void screen_display(void)
     glLightfv(GL_LIGHT0, GL_POSITION,pos);
     glEnable(GL_LIGHTING);
     
+	// treta muito forte para não perder a identidade... D:
+
+	// cubo 1
 	glPushMatrix();
+
         glTranslatef(x, y, z);
-
-        //glBegin(GL_QUADS);
-
-	//glColor3f(0.0f,0.0f,1.0f);
+	glRotated(a, x, y, z);
 	glutSolidCube(0.5);
-	//desenhaCubo(1);
-
-        //glTranslatef(1, 1.5, 0.5);
-	//glutSolidCube(0.5);
-	//desenhaCubo(2);
-        //glEnd();
 
         glPopMatrix();
-    
+
+	// cubo 2
+	glPushMatrix();
+
+        glTranslatef(x2, y2, z2);
+	glRotated(a2, x2, y2, z2);
+	glutSolidCube(0.5);
+
+        glPopMatrix();
+
+	// tche 3
+	glPushMatrix();
+
+        glTranslatef(x3, y3, z3);
+	glRotated(a3, x3, y3, z3);
+	glutSolidTeapot(0.5);
+
+        glPopMatrix();
+
     glDisable(GL_LIGHTING);
     glutSwapBuffers();
 }
@@ -237,6 +231,7 @@ void redisplay_all(void)
 void move(int sig)
 {
 	while (1) {
+
 		if (g <= 0) {
 			x = 0.0;
 			y = 0.0;
@@ -246,8 +241,46 @@ void move(int sig)
 	        	y = (raio * sin(M_PI * g / 180.0f));
 			g -= 0.1;
 		}
+
+		if (g2 >= 360) {
+			x2 = 0.0;
+			y2 = 0.0;
+			g2 = 0.0;
+		} else {
+			x2 = (raio2 * cos(M_PI * g2 / 180.0f));
+	        	y2 = (raio2 * sin(M_PI * g2 / 180.0f));
+			g2 += 0.1;
+		}
+
+		if (a3 <= 0)
+			a3 = 360;
+		else
+			a3 -= 5;
+
+		if (a <= 0)
+			a = 360;
+		else
+			a -= 15;
+
+		if (a2 <= 0)
+			a2 = 360;
+		else
+			a2 -=50;
+
+		if (g3 <= 0) {
+			x3 = 0.0;
+			y3 = 0.0;
+			g3 = 360.0;
+		} else {
+			x3 = (raio3 * cos(M_PI * g3 / 180.0f));
+	        	y3 = (raio3 * sin(M_PI * g3 / 180.0f));
+			g3 -= 0.1;
+		}
+
 		screen_display();
-		printf("Grau %f x %d y %d\n", g, x, y);
+		printf("Grau  %f x %f y %f\n", g, x, y);
+		printf("Grau2 %f x %f y %f\n", g2, x2, y2);
+		printf("Grau3 %f x %f y %f\n", g3, x3, y3);
 	}
 }
 
@@ -268,7 +301,7 @@ main(int argc, char** argv)
     glutInitWindowPosition(50, 50);
     glutInit(&argc, argv);
     
-    window = glutCreateWindow("Projection");
+    window = glutCreateWindow("N4 - Marcos Paulo de Souza / José Guilherme Vanz");
     glutReshapeFunc(screen_reshape);
     glutDisplayFunc(screen_display);
     glutKeyboardFunc(another_keyboard);
