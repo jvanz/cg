@@ -39,11 +39,11 @@ cell lookat[9] = {
 };
 
 cell lookat_cima[9] = {
-    { 1, 180, 120, -5.0, 5.0, 0.0, 0.1,
+    { 1, 180, 120, -5.0, 5.0, 5.0, 0.1,
         "Specifies the X position of the eye point.", "%.2f" },
-    { 2, 240, 120, -5.0, 5.0, 10.0, 0.1,
+    { 2, 240, 120, -5.0, 5.0, 7.0, 0.1,
     "Specifies the Y position of the eye point.", "%.2f" },
-    { 3, 300, 120, -5.0, 5.0, 1.0, 0.1,
+    { 3, 300, 120, -5.0, 5.0, 2.0, 0.1,
     "Specifies the Z position of the eye point.", "%.2f" },
     { 4, 180, 160, -5.0, 5.0, 0.0, 0.1,
     "Specifies the X position of the reference point.", "%.2f" },
@@ -62,7 +62,7 @@ cell lookat_cima[9] = {
 cell lookat_lateral[9] = {
     { 1, 180, 120, -5.0, 5.0, 0.0, 0.1,
         "Specifies the X position of the eye point.", "%.2f" },
-    { 2, 240, 120, -5.0, 5.0, 0.0, 0.1,
+    { 2, 240, 120, -5.0, 5.0, 10.0, 0.1,
     "Specifies the Y position of the eye point.", "%.2f" },
     { 3, 300, 120, -5.0, 5.0, 3.0, 0.1,
     "Specifies the Z position of the eye point.", "%.2f" },
@@ -95,6 +95,7 @@ float x  = 0, y  = 0, z  = 0, raio  = 4, g  = 360, a  = 360;
 float x2 = 0, y2 = 0, z2 = 0, raio2 = 3, g2 = 0, a2   = 360;
 float x3 = 0, y3 = 0, z3 = 0, raio3 = 2, g3 = 360, a3 = 360;
 
+int troca = 1;
 void redisplay_all(void);
 void screen_display(void);
 
@@ -102,63 +103,7 @@ GLdouble projection[16], modelview[16];
 GLuint window;
 GLuint sub_width = 512, sub_height = 512;
 
-void another_keyboard(unsigned char key, int x, int y)
-{
-	printf("another\n");
-    switch (key) {
-    case 'l':
-    case 'L':
-        lookat[0].value = lookat_lateral[0].value;
-        lookat[1].value = lookat_lateral[1].value;
-        lookat[2].value = lookat_lateral[2].value;
-        lookat[3].value = lookat_lateral[3].value;
-        lookat[4].value = lookat_lateral[4].value;
-        lookat[5].value = lookat_lateral[5].value;
-        lookat[6].value = lookat_lateral[6].value;
-        lookat[7].value = lookat_lateral[7].value;
-        lookat[8].value = lookat_lateral[8].value;
-        break;
-    case 'c':
-    case 'C':
-        lookat[0].value = lookat_cima[0].value;
-        lookat[1].value = lookat_cima[1].value;
-        lookat[2].value = lookat_cima[2].value;
-        lookat[3].value = lookat_cima[3].value;
-        lookat[4].value = lookat_cima[4].value;
-        lookat[5].value = lookat_cima[5].value;
-        lookat[6].value = lookat_cima[6].value;
-        lookat[7].value = lookat_cima[7].value;
-        lookat[8].value = lookat_cima[8].value;
-        break;
-    }
-    redisplay_all();
-}
-
-void
-main_keyboard(int key, int x, int y)
-{
-	printf("main\n");
-    switch (key) {
-    case 100: //esquerda
-        lookat[3].value -= 0.1;
-	printf("esq\n");
-	break;
-    case 101: //cima
-    case 102: //direita
-
-	printf("dir\n");
-	break;
-    case 103: //baixo
-	break;
-    case 27:
-        exit(0);
-    }
-    
-	screen_display();
-}
-
-void
-screen_reshape(int width, int height)
+void screen_reshape(int width, int height)
 {
     glViewport(0, 0, width, height);
     glMatrixMode(GL_PROJECTION);
@@ -175,8 +120,6 @@ screen_reshape(int width, int height)
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_LIGHTING);
     glEnable(GL_LIGHT0);
-
-	printf("reshape..\n");
 }
 
 void screen_display(void)
@@ -219,8 +162,6 @@ void screen_display(void)
     glutSwapBuffers();
 }
 
-
-
 void redisplay_all(void)
 {
     glutSetWindow(window);
@@ -231,17 +172,21 @@ void redisplay_all(void)
 void move(int sig)
 {
 	while (1) {
-
 		if (g <= 0) {
 			x = 0.0;
 			y = 0.0;
 			g = 360.0;
+			troca = !troca;
+			if(troca)
+				memcpy(lookat,lookat_lateral,sizeof(lookat_lateral));
+			else
+				memcpy(lookat,lookat_cima,sizeof(lookat_cima));
+			screen_reshape(sub_width, sub_height);
 		} else {
 			x = (raio * cos(M_PI * g / 180.0f));
 	        	y = (raio * sin(M_PI * g / 180.0f));
 			g -= 0.1;
 		}
-
 		if (g2 >= 360) {
 			x2 = 0.0;
 			y2 = 0.0;
@@ -251,17 +196,14 @@ void move(int sig)
 	        	y2 = (raio2 * sin(M_PI * g2 / 180.0f));
 			g2 += 0.1;
 		}
-
 		if (a3 <= 0)
 			a3 = 360;
 		else
 			a3 -= 5;
-
 		if (a <= 0)
 			a = 360;
 		else
 			a -= 15;
-
 		if (a2 <= 0)
 			a2 = 360;
 		else
@@ -278,9 +220,6 @@ void move(int sig)
 		}
 
 		screen_display();
-		printf("Grau  %f x %f y %f\n", g, x, y);
-		printf("Grau2 %f x %f y %f\n", g2, x2, y2);
-		printf("Grau3 %f x %f y %f\n", g3, x3, y3);
 	}
 }
 
@@ -304,8 +243,6 @@ main(int argc, char** argv)
     window = glutCreateWindow("N4 - Marcos Paulo de Souza / José Guilherme Vanz");
     glutReshapeFunc(screen_reshape);
     glutDisplayFunc(screen_display);
-    glutKeyboardFunc(another_keyboard);
-    glutSpecialFunc(main_keyboard);
 
     redisplay_all();
 
