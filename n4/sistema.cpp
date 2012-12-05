@@ -126,7 +126,7 @@ void screen_display(void)
 {
     GLfloat pos[4] = {0.0, 3.0, 0.0, 1};
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    glLightfv(GL_LIGHT0, GL_POSITION,pos);
+    glLightfv(GL_LIGHT0, GL_POSITION, pos);
     glEnable(GL_LIGHTING);
     
 	// treta muito forte para não perder a identidade... D:
@@ -177,10 +177,10 @@ void move(int sig)
 			y = 0.0;
 			g = 360.0;
 			troca = !troca;
-			if(troca)
-				memcpy(lookat,lookat_lateral,sizeof(lookat_lateral));
+			if(!troca)
+				memcpy(lookat, lookat_lateral, sizeof(lookat_lateral));
 			else
-				memcpy(lookat,lookat_cima,sizeof(lookat_cima));
+				memcpy(lookat, lookat_cima, sizeof(lookat_cima));
 			screen_reshape(sub_width, sub_height);
 		} else {
 			x = (raio * cos(M_PI * g / 180.0f));
