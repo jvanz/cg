@@ -94,17 +94,6 @@ cell perspective[4] = {
     "Specifies distance from viewer to far clipping plane.", "%.1f" },
 };
 
-cell light[4] = { /*Array não usado. Não remover por enquanto*/
-    { 10, 180, 40, -5.0, 5.0, 1.5, 0.1,
-        "Specifies X coordinate of light vector.", "%.2f" },
-    { 11, 240, 40, -5.0, 5.0, 1.0, 0.1,
-    "Specifies Y coordinate of light vector.", "%.2f" },
-    { 12, 300, 40, -5.0, 5.0, 1.0, 0.1,
-    "Specifies Z coordinate of light vector.", "%.2f" },
-    { 13, 360, 40, 0.0, 1.0, 0.0, 1.0,
-    "Specifies directional (0) or positional (1) light.", "%.2f" }
-};
-
 float x = 0, y = 0, z = 0, raio = 3;
 float g = 360;
 
@@ -167,7 +156,6 @@ main_keyboard(int key, int x, int y)
         exit(0);
     }
     
- //   redisplay_all();
 	screen_display();
 }
 
@@ -193,70 +181,9 @@ screen_reshape(int width, int height)
 	printf("reshape..\n");
 }
 
-float cubo1[24][3] = {{-1.0f, -1.0f, -1.0f},
-		      {1.0f, -1.0f, -1.0f},
-		      {1.0f, 1.0f, -1.0f},
-		      {-1.0f, 1.0f, -1.0f},
-
-		      {-1.0f, -1.0f, -1.0f},
-		      {-1.0f, -1.0f, 1.0f},
-		      {-1.0f, 1.0f, -1.0f},
-		      {-1.0f, 1.0f, 1.0f},
-		     
-	              {-1.0f, -1.0f, -1.0f},
-	              {-1.0f, -1.0f, 1.0f},
-		      {1.0f, -1.0f, 1.0f},
-		      {1.0f, -1.0f, -1.0f},
-
-		      {-1.0f, -1.0f, 1.0f},
-		      {1.0f, -1.0f, 1.0f},
-		      {1.0f, 1.0f, 1.0f},
-		      {-1.0f, 1.0f, 1.0f},
-
-		      {-1.0f, -1.0f, 1.0f},
-		      {1.0f, -1.0f, 1.0f},
-		      {1.0f, 1.0f, 1.0f},
-		      {-1.0f, 1.0f, 1.0f},
-
-		      {-1.0f, 1.0f, -1.0f},
-		      {-1.0f, 1.0f, 1.0f},
-		      {1.0f, 1.0f, 1.0f},
-		      {1.0f, 1.0f,- 1.0f}};
-
-
-float cubo2[24][3] = {{1.0f, 1.0f, 1.0f},
-		      {-1.0f, 1.0f, 1.0f},
-		      {-1.0f,- 1.0f, 1.0f},
-		      {1.0f,- 1.0f, 1.0f},
-
-		      {1.0f, 1.0f, 1.0f},
-		      {1.0f, 1.0f, -1.0f},
-		      {1.0f, -1.0f, 1.0f},
-		      {1.0f, -1.0f, -1.0f},
-		     
-	              {1.0f, 1.0f, 1.0f},
-	              {1.0f, 1.0f, -1.0f},
-		      {-1.0f, 1.0f, -1.0f},
-		      {-1.0f, 1.0f, 1.0f},
-
-		      {1.0f, 1.0f, -1.0f},
-		      {-1.0f, 1.0f, -1.0f},
-		      {-1.0f, -1.0f, -1.0f},
-		      {1.0f, -1.0f, -1.0f},
-
-		      {1.0f, 1.0f, -1.0f},
-		      {-1.0f, 1.0f, -1.0f},
-		      {-1.0f, -1.0f, -1.0f},
-		      {1.0f, -1.0f, -1.0f},
-
-		      {1.0f, -1.0f, 1.0f},
-		      {1.0f, -1.0f, -1.0f},
-		      {-1.0f, -1.0f, -1.0f},
-		      {-1.0f, -1.0f,1.0f}};
 
 void desenhaCubo(int idCubo)
 {
-//TODO - Melhorar esse BS
 	int vertice;
 	if(idCubo == 1){
 		//cubo 1
@@ -269,37 +196,6 @@ void desenhaCubo(int idCubo)
 			        glVertex3f(cubo2[vertice][0], cubo2[vertice][1], cubo2[vertice][2]);
 		}
 	}
-/*
-        glVertex3f(-1.0f,-1.0f ,-1.0f);
-        glVertex3f(1.0f, -1.0f, -1.0f);
-        glVertex3f(1.0f, 1.0f, -1.0f);
-        glVertex3f(-1.0f, 1.0f, -1.0f);
-
-        glVertex3f(-1.0f, -1.0f, -1.0f);
-        glVertex3f(-1.0f, -1.0f, 1.0f);
-        glVertex3f(-1.0f, 1.0f, -1.0f);
-        glVertex3f(-1.0f, 1.0f, 1.0f);
-
-        glVertex3f(-1.0f, -1.0f, -1.0f);
-        glVertex3f(-1.0f, -1.0f, 1.0f);
-        glVertex3f(1.0f, -1.0f, 1.0f);
-        glVertex3f(1.0f, -1.0f, -1.0f);
-
-        glVertex3f(-1.0f, -1.0f, 1.0f);
-        glVertex3f(1.0f, -1.0f, 1.0f);
-        glVertex3f(1.0f, 1.0f, 1.0f);
-        glVertex3f(-1.0f, 1.0f, 1.0f);
-
-        glVertex3f(-1.0f,-1.0f ,1.0f );
-        glVertex3f(1.0f, -1.0f, 1.0f);
-        glVertex3f(1.0f, 1.0f, 1.0f);
-        glVertex3f(-1.0f, 1.0f, 1.0f);
-
-        glVertex3f(-1.0f, 1.0f, -1.0f);
-        glVertex3f(-1.0f, 1.0f, 1.0f);
-        glVertex3f(1.0f, 1.0f, 1.0f);
-        glVertex3f(1.0f, 1.0f, -1.0f);
-*/
 }
 
 void screen_display(void)
