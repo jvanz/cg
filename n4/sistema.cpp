@@ -3,6 +3,8 @@
 #include <stdlib.h>
 #include <stdarg.h>
 #include <string.h>
+#include <unistd.h>
+#include <signal.h>
 #include "glm.h"
 
 typedef struct _cell {
@@ -19,11 +21,11 @@ double rotate_y=0;
 double rotate_x=0;
 
 cell lookat[9] = {
-    { 1, 180, 120, -5.0, 5.0, 0.0, 0.1,
+    { 1, 180, 120, -5.0, 5.0, 5.0, 0.1,
         "Specifies the X position of the eye point.", "%.2f" },
     { 2, 240, 120, -5.0, 5.0, 5.0, 0.1,
     "Specifies the Y position of the eye point.", "%.2f" },
-    { 3, 300, 120, -5.0, 5.0, 1.0, 0.1,
+    { 3, 300, 120, -5.0, 5.0, 2.0, 0.1,
     "Specifies the Z position of the eye point.", "%.2f" },
     { 4, 180, 160, -5.0, 5.0, 0.0, 0.1,
     "Specifies the X position of the reference point.", "%.2f" },
@@ -82,7 +84,7 @@ cell lookat_lateral[9] = {
 };
 
 cell perspective[4] = {
-    { 10, 180, 80, 1.0, 179.0, 97.0, 1.0,
+    { 10, 180, 80, 1.0, 179.0, 60.0, 1.0,
         "Specifies field of view angle (in degrees) in y direction.", "%.1f" },
     { 11, 512, 512, -3.0, 3.0, 1.0, 0.01,
     "Specifies field of view in x direction (width/height).", "%.2f" },
@@ -103,11 +105,12 @@ cell light[4] = { /*Array não usado. Não remover por enquanto*/
     "Specifies directional (0) or positional (1) light.", "%.2f" }
 };
 
-
-//float cubos[2][] = 
-
+float x = 0, y = 0, z = 0, raio = 3;
+float g = 360;
 
 void redisplay_all(void);
+void screen_display(void);
+
 GLdouble projection[16], modelview[16];
 GLuint window;
 GLuint sub_width = 512, sub_height = 512;
@@ -155,7 +158,7 @@ main_keyboard(int key, int x, int y)
 	break;
     case 101: //cima
     case 102: //direita
-        lookat[3].value += 0.1;
+
 	printf("dir\n");
 	break;
     case 103: //baixo
@@ -164,7 +167,8 @@ main_keyboard(int key, int x, int y)
         exit(0);
     }
     
-    redisplay_all();
+ //   redisplay_all();
+	screen_display();
 }
 
 void
@@ -185,6 +189,8 @@ screen_reshape(int width, int height)
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_LIGHTING);
     glEnable(GL_LIGHT0);
+
+	printf("reshape..\n");
 }
 
 float cubo1[24][3] = {{-1.0f, -1.0f, -1.0f},
@@ -304,18 +310,18 @@ void screen_display(void)
     glEnable(GL_LIGHTING);
     
 	glPushMatrix();
-        glTranslatef(0, 0, 0);
+        glTranslatef(x, y, z);
 
-        glBegin(GL_QUADS);
+        //glBegin(GL_QUADS);
 
-	glColor3f(0.0f,0.0f,1.0f);
+	//glColor3f(0.0f,0.0f,1.0f);
 	glutSolidCube(0.5);
 	//desenhaCubo(1);
 
-        glTranslatef(1, 1.5, 0.5);
-	glutSolidCube(0.5);
+        //glTranslatef(1, 1.5, 0.5);
+	//glutSolidCube(0.5);
 	//desenhaCubo(2);
-        glEnd();
+        //glEnd();
 
         glPopMatrix();
     
@@ -332,9 +338,35 @@ void redisplay_all(void)
     glutPostRedisplay();
 }
 
+void move(int sig)
+{
+	while (1) {
+		if (g <= 0) {
+			x = 0.0;
+			y = 0.0;
+			g = 360.0;
+		} else {
+			x = (raio * cos(M_PI * g / 180.0f));
+	        	y = (raio * sin(M_PI * g / 180.0f));
+			g -= 0.1;
+		}
+		screen_display();
+		printf("Grau %f x %d y %d\n", g, x, y);
+	}
+}
+
 int
 main(int argc, char** argv)
 {
+	struct sigaction sact;
+
+    sigemptyset( &sact.sa_mask );
+    sact.sa_flags = 0;
+    sact.sa_handler = move;
+    sigaction( SIGALRM, &sact, NULL );
+
+    alarm(1);
+
     glutInitDisplayMode(GLUT_RGB | GLUT_DEPTH | GLUT_DOUBLE);
     glutInitWindowSize(sub_width, sub_height);
     glutInitWindowPosition(50, 50);
@@ -342,14 +374,13 @@ main(int argc, char** argv)
     
     window = glutCreateWindow("Projection");
     glutReshapeFunc(screen_reshape);
-//    glutReshapeFunc(redisplay_all);
     glutDisplayFunc(screen_display);
     glutKeyboardFunc(another_keyboard);
     glutSpecialFunc(main_keyboard);
 
     redisplay_all();
-    
+
     glutMainLoop();
-    
+
     return 0;
 }
